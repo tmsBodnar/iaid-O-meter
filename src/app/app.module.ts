@@ -20,6 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { MatSnackBarModule} from '@angular/material/snack-bar';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { MatSnackBarModule} from '@angular/material/snack-bar';
     DashboardComponent,
     SignInComponent,
     SignUpComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,

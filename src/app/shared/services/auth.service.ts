@@ -4,19 +4,20 @@ import  firebase  from 'firebase/app';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from "@angular/router";
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
-  userData: any; // Save logged in user data
+  userData: any;
 
   constructor(
-    public afs: AngularFirestore,   // Inject Firestore service
-    public afAuth: AngularFireAuth, // Inject Firebase auth service
+    public afs: AngularFirestore,
+    public afAuth: AngularFireAuth,
     public router: Router,  
-    public ngZone: NgZone // NgZone service to remove outside scope warning
+    public ngZone: NgZone
   ) {    
     /* Saving user data in localstorage when 
     logged in and setting up null when logged out */
@@ -33,20 +34,22 @@ export class AuthService {
   }
 
   // Sign in with email/password
-  SignIn(email: string, password: string) {
-    return this.afAuth.signInWithEmailAndPassword(email, password)
-      .then((result: any) => {
+  async SignIn(email: string, password: string) {
+    try {
+      const result = await this.afAuth.signInWithEmailAndPassword(email, password);
+      if(result.user){
         if (result.user.emailVerified) {
-        this.ngZone.run(() => {
-          this.router.navigate(['dashboard']);
-        });
-        }else {
+          this.ngZone.run(() => {
+            this.router.navigate(['dashboard']);
+          });
+        } else {
           this.router.navigate(['verify-email-address']);
         }
         this.updateUserData(result.user);
-      }).catch((error: any) => {
-        window.alert(error.message)
-      })
+      }
+    } catch (error) {
+      window.alert(error.message);
+    }
   }
 
   // Sign up with email/password
@@ -104,6 +107,8 @@ export class AuthService {
       window.alert(error)
     }
   }
+
+  // update user data
   updateUserData(user: any) {
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
 
@@ -120,24 +125,23 @@ export class AuthService {
   }
 
   // Auth logic to run auth providers
-  AuthLogin(provider: any) {
-    return this.afAuth.signInWithPopup(provider)
-    .then((result: any) => {
-       this.ngZone.run(() => {
-          this.router.navigate(['dashboard']);
-        })
+  async AuthLogin(provider: any) {
+    try {
+      const result = await this.afAuth.signInWithPopup(provider);
+      this.ngZone.run(() => {
+        this.router.navigate(['dashboard']);
+      });
       this.updateUserData(result.user);
-    }).catch((error: any) => {
-      window.alert(error)
-    })
+    } catch (error) {
+      window.alert(error);
+    }
   }
 
   // Sign out 
-  SignOut() {
-    return this.afAuth.signOut().then(() => {
-      localStorage.removeItem('user');
-      this.router.navigate(['sign-in']);
-    })
+  async SignOut() {
+    await this.afAuth.signOut();
+    localStorage.removeItem('user');
+    this.router.navigate(['sign-in']);
   }
 
 }
