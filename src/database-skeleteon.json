@@ -1,0 +1,78 @@
+{
+    "Iaidoka":{
+        "name": "",
+        "dojo": "",
+        "sensei": "",
+        "email": ""
+    },
+    "dojo": {
+        "name": "",
+        "location":"",
+        "members": {
+            "iaidoka": true
+        }
+    },
+    "sensei": {
+        "name": "",
+        "ryuha" :{
+            "ryuha": true
+        }
+    },
+    "ryuha": {
+        "name": ""
+    },
+    "kata": {
+        "name": "",
+        "description": "",
+        "number": "",
+        "ryuha": "",
+        "jakukante": {
+            "jakukante": true
+        },
+        "movement": {
+            "movement": true
+        }
+    },
+    "jakukante": {
+        "description": "",
+        "kata": {
+            "kata": true
+        },
+        "technical": {
+            "technical": true
+        },
+        "needs-practice": true
+    },
+    "movement": {
+        "name": "",
+        "technical": {
+            "technical": true
+        },
+        "needs-practice": true
+    },
+    "technical": {
+        "description": "",
+        "priority": "",
+        "jakukante": {
+            "jakukante": true
+        },
+        "movement": {
+            "kata": true
+        },
+        "media": {
+            "media": true
+        }
+    },
+    "media": {
+        "name": "",
+        "path": "",
+        "isPicture": true
+    },
+    "training": {
+        "date": "",
+        "kata": {
+            "kata": true
+        }
+    }
+
+}

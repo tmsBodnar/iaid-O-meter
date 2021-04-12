@@ -24,13 +24,13 @@
             </mat-icon>
           </button>
         </mat-form-field>
-        <div class="centered-text">
-          <a routerLink="/forgot-password">Forgot Password?</a>
-        </div>
         <div class="loginbtn centered-text">   
           <button mat-raised-button color="primary" [disabled]="loginForm.invalid" type="submit">
             Login
           </button>
+        </div>
+        <div class="centered-text" style="margin-bottom: 2em;">
+          <a routerLink="/forgot-password">Forgot Password?</a>
         </div>
       </form>
       <div class="loginbtn centered-text">

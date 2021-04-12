@@ -2,9 +2,9 @@ import { Injectable, NgZone } from '@angular/core';
 import { User } from "../models/User";
 import  firebase  from 'firebase/app';
 import { AngularFireAuth } from "@angular/fire/auth";
+import { AngularFireDatabase, AngularFireList, AngularFireObject } from "@angular/fire/database"
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from "@angular/router";
-import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,7 @@ export class AuthService {
 
   constructor(
     public afs: AngularFirestore,
+    public afdb: AngularFireDatabase,
     public afAuth: AngularFireAuth,
     public router: Router,  
     public ngZone: NgZone
@@ -39,13 +40,13 @@ export class AuthService {
       const result = await this.afAuth.signInWithEmailAndPassword(email, password);
       if(result.user){
         if (result.user.emailVerified) {
-          this.ngZone.run(() => {
+          this.ngZone.run(async () => {
             this.router.navigate(['dashboard']);
+            await this.updateUserData(result.user);
           });
         } else {
           this.router.navigate(['verify-email-address']);
         }
-        this.updateUserData(result.user);
       }
     } catch (error) {
       window.alert(error.message);
@@ -70,7 +71,6 @@ export class AuthService {
     const user = await this.afAuth.currentUser;
     if (!user?.emailVerified) {
       await user?.sendEmailVerification();
-      console.log(user);
       this.router.navigate(['verify-email-address']);
       return false;
     } else {
@@ -93,7 +93,12 @@ export class AuthService {
   // Returns true when user is looged in and email is verified
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-    return (user !== null && user.emailVerified !== false) ? true : false;
+    return (JSON.stringify(user) !== '{}') ? true : false;
+  }
+
+  get isEmailVerified() : boolean {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    return (JSON.stringify(user) !== '{}' && user.emailVerified) ? true : false;
   }
 
   // Sign in with Google
@@ -110,17 +115,15 @@ export class AuthService {
 
   // update user data
   updateUserData(user: any) {
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+    const userRef = this.afdb.database.ref(`iaidoka/${user.uid}`);
 
     const data = { 
       uid: user.uid, 
       email: user.email, 
-      displayName: user.displayName, 
-      photoURL: user.photoURL,
-      emailVerified: user.emailVerified
+      name: user.displayName
     } 
-
-    return userRef.set(data, { merge: true })
+    console.log(data);
+    return userRef.set(data);
 
   }
 
