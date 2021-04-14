@@ -22,6 +22,9 @@ import { CommonModule } from '@angular/common';
 import { VerifyEmailComponent } from './components/auth/verify-email/verify-email.component';
 import { MatSnackBarModule} from '@angular/material/snack-bar';
 import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password.component';
+import { BusyService } from './shared/services/busy.service';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 
 @NgModule({
@@ -48,10 +51,12 @@ import { ForgotPasswordComponent } from './components/auth/forgot-password/forgo
     ReactiveFormsModule,
     MatButtonModule,
     MatSnackBarModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatProgressSpinnerModule
   ],
   providers: [
-    AuthService
+    AuthService, 
+    BusyService
   ],
   bootstrap: [AppComponent]
 })

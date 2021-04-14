@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { BusyService } from 'src/app/shared/services/busy.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -16,7 +17,8 @@ export class SignInComponent implements OnInit {
 
   constructor(
     public authService: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private busyService: BusyService
   ) { 
     this.loginForm = this.formBuilder.group({
       'email': ['', Validators.compose([Validators.required, Validators.email])],
@@ -27,9 +29,11 @@ export class SignInComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmitForm(){
+  async onSubmitForm(){
     this.clicked = true;
-    this.authService.SignIn(this.loginForm.value.email, this.loginForm.value.password);
+    this.busyService.showSpinner();
+    await this.authService.SignIn(this.loginForm.value.email, this.loginForm.value.password);
+    this.busyService.hideSpinner();
   }
 
 }

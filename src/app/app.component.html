@@ -1,2 +1,5 @@
 
-<router-outlet></router-outlet>
+<div class="spinner" *ngIf="this.busyService.busy">
+    <mat-spinner [diameter]="30" ></mat-spinner>
+</div>
+<router-outlet *ngIf="!this.busyService.busy"></router-outlet>
