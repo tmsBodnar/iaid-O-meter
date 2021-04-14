@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class SignInComponent implements OnInit {
 
   hide = true;
+  clicked = false;
 
   loginForm: FormGroup;
 
@@ -27,6 +28,7 @@ export class SignInComponent implements OnInit {
   }
 
   onSubmitForm(){
+    this.clicked = true;
     this.authService.SignIn(this.loginForm.value.email, this.loginForm.value.password);
   }
 
