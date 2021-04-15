@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SignInComponent } from './components/auth/sign-in/sign-in.component';
 import { SignUpComponent } from './components/auth/sign-up/sign-up.component';
-import { AuthService } from './shared/services/auth.service';
+import { AuthService } from './shared/services/auth/auth.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -24,7 +24,11 @@ import { MatSnackBarModule} from '@angular/material/snack-bar';
 import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password.component';
 import { BusyService } from './shared/services/busy.service';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-
+import {MatToolbarModule} from '@angular/material/toolbar';
+import { UserinfoComponent } from './components/userinfo/userinfo.component';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
 
 
 @NgModule({
@@ -34,7 +38,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     SignInComponent,
     SignUpComponent,
     VerifyEmailComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    UserinfoComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +57,11 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatButtonModule,
     MatSnackBarModule,
     MatCheckboxModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule, 
+    MatToolbarModule,
+    MatMenuModule,
+    MatSidenavModule,
+    MatListModule
   ],
   providers: [
     AuthService, 
