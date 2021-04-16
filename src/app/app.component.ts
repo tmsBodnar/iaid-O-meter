@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BusyService } from './shared/services/busy.service';
+import { BusyService } from './shared/services/busy/busy.service';
 
 @Component({
   selector: 'app-root',

@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { MatList, MatListOption, MatSelectionListChange } from '@angular/material/list';
 import { MatDrawer } from '@angular/material/sidenav';
+import { Router } from '@angular/router';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { Iaidoka } from 'src/app/shared/models/Iaidoka';
 import { User } from 'src/app/shared/models/User';
@@ -15,7 +16,7 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 })
 export class DashboardComponent implements OnInit {
 
-  user: User;
+  user?: User;
   iaidoka?: Iaidoka;
   showSidebar = false;
 
@@ -24,22 +25,29 @@ export class DashboardComponent implements OnInit {
 
   selectedOptions = [];
 
-  profil = "profil";
+  profile = "profile";
   menu2 = "menu2";
-  logout = "logout";
+  login = "login";
 
   selectedItem: any;
 
   constructor(
     public authService: AuthService,
     public afdb: AngularFireDatabase,
+    private router: Router
   ) { 
-    this.user = authService.userData;
-    
-  //  this.iaidoka = this.afdb.database.ref(`iaidoka/${this.user.uid}`);
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.user = this.authService.userData;
+    if (this.user){
+    const iaidokaRef = this.afdb.database.ref(`iaidoka/${this.user.uid}`); 
+    const snap = await iaidokaRef.once('value');
+    this.iaidoka = snap.val();
+    if (this.iaidoka && (this.iaidoka.dojo == null || this.iaidoka.sensei == null)) {
+
+    }
+    }
   }
 
   menuClicked() {
@@ -51,5 +59,6 @@ export class DashboardComponent implements OnInit {
     if (this.selectedItem === "logout") {
       this.authService.SignOut();
     }
+    this.router.navigate(['/' + this.selectedItem ]);
   }
 }

@@ -1,15 +1,12 @@
-.example-container {
+.sidenav-container {
     width: 100%;
     height: 100%;
   }
   
-  .example-sidenav-content {
-    display: flex;
+  .sidenav-content {
     height: 100%;
-    align-items: center;
-    justify-content: center;
   }
   
-  .example-sidenav {
+  .sidenav-drawer {
     padding: 20px;
   }

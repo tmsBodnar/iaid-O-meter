@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -8,40 +8,20 @@ import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { SignInComponent } from './components/auth/sign-in/sign-in.component';
-import { SignUpComponent } from './components/auth/sign-up/sign-up.component';
 import { AuthService } from './shared/services/auth/auth.service';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatCheckboxModule } from '@angular/material/checkbox'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { CommonModule } from '@angular/common';
-import { VerifyEmailComponent } from './components/auth/verify-email/verify-email.component';
-import { MatSnackBarModule} from '@angular/material/snack-bar';
-import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password.component';
-import { BusyService } from './shared/services/busy.service';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import { UserinfoComponent } from './components/userinfo/userinfo.component';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatListModule} from '@angular/material/list';
+import { BusyService } from './shared/services/busy/busy.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DashboardModule } from './components/dashboard/dashboard.module';
+import { AuthModule } from './components/auth/auth.module';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    DashboardComponent,
-    SignInComponent,
-    SignUpComponent,
-    VerifyEmailComponent,
-    ForgotPasswordComponent,
-    UserinfoComponent
+    AppComponent
   ],
   imports: [
+    DashboardModule,
+    AuthModule,
     BrowserModule,
     CommonModule,
     AppRoutingModule,
@@ -49,19 +29,7 @@ import {MatListModule} from '@angular/material/list';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    MatFormFieldModule, 
-    MatIconModule, 
-    MatInputModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    MatSnackBarModule,
-    MatCheckboxModule,
-    MatProgressSpinnerModule, 
-    MatToolbarModule,
-    MatMenuModule,
-    MatSidenavModule,
-    MatListModule
+    MatProgressSpinnerModule
   ],
   providers: [
     AuthService, 

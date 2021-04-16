@@ -1,0 +1,9 @@
+.main-wrapper {
+    margin: auto;
+    width: 10em;
+    padding-top: 10em;
+}
+.items {
+    margin: 0.5em;
+    width: 40%;
+}
