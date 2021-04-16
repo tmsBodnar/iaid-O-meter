@@ -26,6 +26,7 @@ export class DashboardComponent implements OnInit {
 
   profil = "profil";
   menu2 = "menu2";
+  logout = "logout";
 
   selectedItem: any;
 
@@ -47,5 +48,8 @@ export class DashboardComponent implements OnInit {
     this.selectedItem = event.options[0].value;
     console.log(this.selectedItem);
     this.drawer?.toggle();
+    if (this.selectedItem === "logout") {
+      this.authService.SignOut();
+    }
   }
 }
