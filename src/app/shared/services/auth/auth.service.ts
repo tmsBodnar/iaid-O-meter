@@ -93,7 +93,6 @@ export class AuthService {
   // Returns true when user is looged in and email is verified
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-    console.log(user);
     return (JSON.stringify(user) !== '{}') ? true : false;
   }
 
@@ -136,7 +135,7 @@ export class AuthService {
       });
       this.updateUserData(result.user);
     } catch (error) {
-      window.alert(error);
+      
     }
   }
 
@@ -145,9 +144,10 @@ export class AuthService {
     try {
       await this.afAuth.signOut();
       localStorage.removeItem('user');
+      this.userData = null;
       this.router.navigate(['sign-in']);
     } catch (error) {
-      console.log(error);
+      window.alert(error);
     }
   }
 }
