@@ -41,8 +41,8 @@ export class AuthService {
       if(result.user){
         if (result.user.emailVerified) {
           this.ngZone.run(async () => {
-            this.router.navigate(['dashboard']);
             await this.updateUserData(result.user);
+            this.router.navigate(['dashboard']);
           });
         } else {
           this.router.navigate(['verify-email-address']);
@@ -93,6 +93,7 @@ export class AuthService {
   // Returns true when user is looged in and email is verified
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
+    console.log(user);
     return (JSON.stringify(user) !== '{}') ? true : false;
   }
 
@@ -106,15 +107,15 @@ export class AuthService {
     try{
       const provider =  new firebase.auth.GoogleAuthProvider();
       const cred = await this.afAuth.signInWithPopup(provider);
+      await this.updateUserData(cred.user);
       this.router.navigate(['dashboard'])
-      return this.updateUserData(cred.user);
     } catch(error: any) {
       window.alert(error)
     }
   }
 
   // update user data
-  updateUserData(user: any) {
+  async updateUserData(user: any) {
     const userRef = this.afdb.database.ref(`iaidoka/${user.uid}`);
 
     const data = { 
@@ -122,8 +123,7 @@ export class AuthService {
       email: user.email, 
       name: user.displayName
     } 
-    console.log(data);
-    return userRef.set(data);
+    return await userRef.set(data);
 
   }
 
@@ -142,9 +142,13 @@ export class AuthService {
 
   // Sign out 
   async SignOut() {
-    await this.afAuth.signOut();
-    localStorage.removeItem('user');
-    this.router.navigate(['sign-in']);
+    try {
+      await this.afAuth.signOut();
+      localStorage.removeItem('user');
+      this.router.navigate(['sign-in']);
+    } catch (error) {
+      console.log(error);
+    }
   }
-
 }
+
