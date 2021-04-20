@@ -145,7 +145,7 @@ export class AuthService {
       await this.afAuth.signOut();
       localStorage.removeItem('user');
       this.userData = null;
-      this.router.navigate(['sign-in']);
+      this.router.navigate(['login']);
     } catch (error) {
       window.alert(error);
     }

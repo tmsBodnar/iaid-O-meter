@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Iaidoka } from 'src/app/shared/models/Iaidoka';
 
 @Component({
   selector: 'app-userinfo',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./userinfo.component.css']
 })
 export class UserinfoComponent implements OnInit {
+
+  @Input()
+  iaidoka?: Iaidoka;
 
   constructor() { }
 

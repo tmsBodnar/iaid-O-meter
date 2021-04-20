@@ -13,11 +13,18 @@ import { BusyService } from './shared/services/busy/busy.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DashboardModule } from './components/dashboard/dashboard.module';
 import { AuthModule } from './components/auth/auth.module';
+import { ComponentContainerDirective } from './shared/directives/component-container.directive';
+import { UserinfoComponent } from './components/userinfo/userinfo.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ComponentContainerDirective,
+    UserinfoComponent
+  ],
+  entryComponents : [
+    UserinfoComponent
   ],
   imports: [
     DashboardModule,
