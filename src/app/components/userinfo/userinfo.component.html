@@ -1,24 +1,41 @@
 <div class="main-wrapper">
-    <form>
-        <div class="items">
-            <mat-label>
-                Name:
+    <form [formGroup]="userForm" (submit)="onFormSubmit()">
+        <mat-form-field appearance=fill class="form-input">
+          <mat-label>
+              Name
             </mat-label>
-        </div>
-        <div class="items">
-            <mat-label>
-            </mat-label>
-        </div>   
+            <input matInput #name formControlName="name" >
+            <mat-icon matSuffix>edit</mat-icon>
+        </mat-form-field>
 
-        <div class="items">
+        <mat-form-field appearance="fill" class="form-input">
             <mat-label>
-                Sensei:
+              Email
             </mat-label>
+            <input type="email" matInput #emailAddr formControlName="email">
+            <mat-icon matSuffix>edit</mat-icon>
+            <mat-error *ngIf="userForm.hasError('email') && !userForm.hasError('required')">
+                Please enter a valid email address
+            </mat-error>
+            <mat-error *ngIf="userForm.hasError('required')">
+               Email is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance=fill class="form-input">
+            <mat-label *ngIf="iaidoka?.ryuha">Ryuha</mat-label>
+                <input matInput #name formControlName="ryuha" placeholder="Please fill your ryuha">
+                <mat-icon matSuffix>edit</mat-icon>
+        </mat-form-field>
+        <div class="loginbtn centered-text">  
+            <button mat-raised-button color="primary" [disabled]="userForm.invalid || clicked" type="submit">
+                Save
+            </button>
         </div>
-        <div class="items">
-            <mat-label>
-                Dojo:
-            </mat-label>
-        </div>
-    </form>
+    </form>      
+        <div class="loginbtn centered-text">  
+            <button mat-raised-button color="primary" (click)="onCancelClicked()">
+                    Cancel
+            </button>
+        </div>    
 </div>

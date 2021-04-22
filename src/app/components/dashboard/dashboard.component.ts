@@ -4,7 +4,6 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { MatSelectionListChange } from '@angular/material/list';
 import { MatDrawer } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
-import { ComponentContainerDirective } from 'src/app/shared/directives/component-container.directive';
 import { Iaidoka } from 'src/app/shared/models/Iaidoka';
 import { User } from 'src/app/shared/models/User';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
@@ -54,10 +53,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       const iaidokaRef = this.afdb.database.ref(`iaidoka/${this.user.uid}`); 
       const snap = await iaidokaRef.once('value');
       this.iaidoka = snap.val();
-      if (this.iaidoka && (this.iaidoka.dojo == null || this.iaidoka.sensei == null)) {
+      if (this.iaidoka && (this.iaidoka.ryuha == null)) {
         let componentFactory = this.componentFactoryResolver.resolveComponentFactory(UserinfoComponent);
         this.componentContainerRef.clear();
         const componentRef = this.componentContainerRef.createComponent<UserinfoComponent>(componentFactory);
+        console.log(this.iaidoka);
         componentRef.instance.iaidoka = this.iaidoka;
       } else {
         //load to dashboard
