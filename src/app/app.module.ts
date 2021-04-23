@@ -15,19 +15,17 @@ import { DashboardModule } from './components/dashboard/dashboard.module';
 import { AuthModule } from './components/auth/auth.module';
 import { ComponentContainerDirective } from './shared/directives/component-container.directive';
 import { UserinfoComponent } from './components/userinfo/userinfo.component';
+import { UserinfoModule } from './components/userinfo/userinfo.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ComponentContainerDirective,
-    UserinfoComponent
-  ],
-  entryComponents : [
-    UserinfoComponent
   ],
   imports: [
     DashboardModule,
+    UserinfoModule,
     AuthModule,
     BrowserModule,
     CommonModule,

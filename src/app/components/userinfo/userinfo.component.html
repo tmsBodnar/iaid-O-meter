@@ -33,8 +33,8 @@
             </button>
         </div>
     </form>      
-        <div class="loginbtn centered-text">  
-            <button mat-raised-button color="primary" (click)="onCancelClicked()">
+        <div class="loginbtn centered-text" *ngIf="this.ryuha">  
+            <button mat-raised-button color="primary"  (click)="onCancelClicked()">
                     Cancel
             </button>
         </div>    

@@ -8,7 +8,7 @@
 <mat-drawer-container class="sidenav-container" hasBackdrop="true" (backDropClick)="drawer.toggle()" autosize>
   <mat-drawer #drawer class="sidenav-drawer" mode="over" >
     <mat-selection-list #menuitems [multiple]="false" (selectionChange)="onMenuitemClicked($event)"
-    selectedOptions="selectedOptions">
+    selectedOptions="selectedOptions" (click)="drawer.toggle()">
       <mat-list-option [value]="profile">Profil</mat-list-option>
       <mat-list-option [value]="menu2">Menu2</mat-list-option>
       <mat-list-option [value]="login">Logout</mat-list-option>

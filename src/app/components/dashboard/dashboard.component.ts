@@ -1,13 +1,15 @@
 
+import { SelectionModel } from '@angular/cdk/collections';
 import { AfterViewInit, Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
-import { MatSelectionListChange } from '@angular/material/list';
+import { MatListOption, MatSelectionList, MatSelectionListChange } from '@angular/material/list';
 import { MatDrawer } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { Iaidoka } from 'src/app/shared/models/Iaidoka';
 import { User } from 'src/app/shared/models/User';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { UserinfoComponent } from '../userinfo/userinfo.component';
+import { UserinfoModule } from '../userinfo/userinfo.module';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,8 +28,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   @ViewChild('componentcontainer',  { read: ViewContainerRef })
   componentContainerRef!: ViewContainerRef ;
 
-  selectedOptions = [];
-
+  selectedOptions?: SelectionModel<MatListOption>;
   profile = "profile";
   menu2 = "menu2";
   login = "login";
@@ -45,6 +46,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    
     this.user = this.authService.userData;
   }
 
@@ -57,7 +59,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         let componentFactory = this.componentFactoryResolver.resolveComponentFactory(UserinfoComponent);
         this.componentContainerRef.clear();
         const componentRef = this.componentContainerRef.createComponent<UserinfoComponent>(componentFactory);
-        console.log(this.iaidoka);
         componentRef.instance.iaidoka = this.iaidoka;
       } else {
         //load to dashboard
@@ -72,13 +73,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   onMenuitemClicked(event: MatSelectionListChange){
     this.selectedItem = event.options[0].value;
     this.componentContainerRef.clear();
-    this.drawer.toggle();
     if (this.selectedItem === "login") {
       this.authService.SignOut();
     } else if (this.selectedItem === "profile"){
       let componentFactory = this.componentFactoryResolver.resolveComponentFactory(UserinfoComponent);
       const componentRef = this.componentContainerRef.createComponent<UserinfoComponent>(componentFactory);
-      componentRef.instance.iaidoka = this.iaidoka; 
-    }    
+      componentRef.instance.iaidoka = this.iaidoka;
+    }   
   }
 }

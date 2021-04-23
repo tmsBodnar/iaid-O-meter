@@ -36,6 +36,7 @@ export class UserinfoComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.ryuha = this.iaidoka?.ryuha;
     this.userForm.controls['name'].setValue(this.iaidoka?.name);
     this.userForm.controls['email'].setValue(this.iaidoka?.email);
     this.userForm.controls['ryuha'].setValue(this.iaidoka?.ryuha?.name);
@@ -45,14 +46,14 @@ export class UserinfoComponent implements OnInit {
     this.ryuha = {
       name:  this.userForm.controls['ryuha'].value
     }
-    this.iaidoka!.ryuha = this.ryuha;
-    console.log(this.iaidoka);
-    console.log(this.ryuha);
+    this.iaidoka!.name = this.userForm.controls['name'].value,
+    this.iaidoka!.email = this.userForm.controls['email'].value,
+    this.iaidoka!.ryuha = this.ryuha
     this.clicked = true;
+    console.log(this.iaidoka);
   }
 
   onCancelClicked(){
-    console.log('cancel', this.iaidoka);
     this.router.navigate(['dashboard']);
   }
 
