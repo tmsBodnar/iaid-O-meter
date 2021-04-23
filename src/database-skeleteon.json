@@ -1,25 +1,13 @@
 {
     "Iaidoka":{
         "name": "",
-        "dojo": "",
-        "sensei": "",
         "email": ""
     },
-    "dojo": {
-        "name": "",
-        "location":"",
-        "members": {
-            "iaidoka": true
-        }
-    },
-    "sensei": {
-        "name": "",
-        "ryuha" :{
-            "ryuha": true
-        }
-    },
     "ryuha": {
-        "name": ""
+        "name": "",
+        "kata": {
+            "kata": true
+        }
     },
     "kata": {
         "name": "",
