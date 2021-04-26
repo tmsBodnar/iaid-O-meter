@@ -1,16 +1,20 @@
 <!-- Top navigation -->
 <mat-toolbar color="primary">
-  <button mat-icon-button aria-label="Example icon-button with menu icon" (click)="drawer.toggle()">
+  <button mat-icon-button (click)="drawer.toggle()">
    <mat-icon>menu</mat-icon>
  </button>
  <span>iaid-O-meter</span>
+ <span class="spacer"></span>
+ <button mat-icon-button (click)="onAccountClicked()" style="float: right;">
+  <mat-icon>account_circle</mat-icon>
+</button>
+ 
 </mat-toolbar>
 <mat-drawer-container class="sidenav-container" hasBackdrop="true" (backDropClick)="drawer.toggle()" autosize>
   <mat-drawer #drawer class="sidenav-drawer" mode="over" >
     <mat-selection-list #menuitems [multiple]="false" (selectionChange)="onMenuitemClicked($event)"
     selectedOptions="selectedOptions" (click)="drawer.toggle()">
-      <mat-list-option [value]="profile">Profil</mat-list-option>
-      <mat-list-option [value]="menu2">Menu2</mat-list-option>
+      <mat-list-option [value]="home">Home</mat-list-option>
       <mat-list-option [value]="login">Logout</mat-list-option>
     </mat-selection-list>
   </mat-drawer>

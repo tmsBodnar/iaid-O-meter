@@ -14,7 +14,6 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatIconModule,
     MatInputModule,
     MatButtonModule,
-    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     MatGridListModule

@@ -1,5 +1,6 @@
 <div class="main-wrapper">
     <form [formGroup]="userForm" (submit)="onFormSubmit()">
+
         <mat-form-field appearance=fill class="form-input">
           <mat-label>
               Name
@@ -22,20 +23,15 @@
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance=fill class="form-input">
-            <mat-label *ngIf="iaidoka?.ryuha">Ryuha</mat-label>
-                <input matInput #name formControlName="ryuha" placeholder="Please fill your ryuha">
-                <mat-icon matSuffix>edit</mat-icon>
-        </mat-form-field>
         <div class="loginbtn centered-text">  
             <button mat-raised-button color="primary" [disabled]="userForm.invalid || clicked" type="submit">
                 Save
             </button>
         </div>
     </form>      
-        <div class="loginbtn centered-text" *ngIf="this.ryuha">  
+        <div class="loginbtn centered-text">  
             <button mat-raised-button color="primary"  (click)="onCancelClicked()">
-                    Cancel
+                    Back
             </button>
         </div>    
 </div>

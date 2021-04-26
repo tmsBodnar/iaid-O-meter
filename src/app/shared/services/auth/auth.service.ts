@@ -1,10 +1,9 @@
 import { Injectable, NgZone } from '@angular/core';
-import { User } from "../../models/User";
 import  firebase  from 'firebase/app';
 import { AngularFireAuth } from "@angular/fire/auth";
-import { AngularFireDatabase, AngularFireList, AngularFireObject } from "@angular/fire/database"
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from "@angular/router";
+import { FirebaseService } from '../firebase/firebase.service';
+import { Iaidoka } from '../../models/Iaidoka';
 
 @Injectable({
   providedIn: 'root'
@@ -12,16 +11,14 @@ import { Router } from "@angular/router";
 
 export class AuthService {
   userData: any;
+  iaidoka?: Iaidoka
 
   constructor(
-    public afs: AngularFirestore,
-    public afdb: AngularFireDatabase,
     public afAuth: AngularFireAuth,
     public router: Router,  
-    public ngZone: NgZone
+    public ngZone: NgZone,
+    private firebaseService: FirebaseService
   ) {    
-    /* Saving user data in localstorage when 
-    logged in and setting up null when logged out */
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.userData = user;
@@ -30,6 +27,7 @@ export class AuthService {
       } else {
         localStorage.setItem('user', '');
         JSON.parse(localStorage.getItem('user') || '{}');
+        this.iaidoka = undefined;
       }
     })
   }
@@ -40,10 +38,8 @@ export class AuthService {
       const result = await this.afAuth.signInWithEmailAndPassword(email, password);
       if(result.user){
         if (result.user.emailVerified) {
-          this.ngZone.run(async () => {
-            await this.updateUserData(result.user);
-            this.router.navigate(['dashboard']);
-          });
+          this.iaidoka = await this.firebaseService.getIaidokaById(result.user.uid);
+          this.router.navigate(['dashboard']);
         } else {
           this.router.navigate(['verify-email-address']);
         }
@@ -60,7 +56,7 @@ export class AuthService {
       const user = firebase.auth().currentUser;
       await user?.updateProfile({ displayName: displayName });
       await this.SendVerificationMail();
-      await this.updateUserData(result.user);
+      await this.firebaseService.updateUserData(result.user);
     } catch (error: any) {
         window.alert(error.message)
       }
@@ -76,8 +72,6 @@ export class AuthService {
     } else {
       return true;
     }
-    
-
   }
 
   // Reset Forggot password
@@ -106,24 +100,14 @@ export class AuthService {
     try{
       const provider =  new firebase.auth.GoogleAuthProvider();
       const cred = await this.afAuth.signInWithPopup(provider);
-      await this.updateUserData(cred.user);
+      if (cred.user) {
+        await this.firebaseService.updateUserData(cred.user);
+        this.iaidoka = await this.firebaseService.getIaidokaById(cred.user.uid);
+      }
       this.router.navigate(['dashboard'])
     } catch(error: any) {
       window.alert(error)
     }
-  }
-
-  // update user data
-  async updateUserData(user: any) {
-    const userRef = this.afdb.database.ref(`iaidoka/${user.uid}`);
-
-    const data = { 
-      uid: user.uid, 
-      email: user.email, 
-      name: user.displayName
-    } 
-    return await userRef.set(data);
-
   }
 
   // Auth logic to run auth providers
@@ -133,7 +117,7 @@ export class AuthService {
       this.ngZone.run(() => {
         this.router.navigate(['dashboard']);
       });
-      this.updateUserData(result.user);
+      this.firebaseService.updateUserData(result.user);
     } catch (error) {
       
     }

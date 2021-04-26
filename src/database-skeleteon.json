@@ -3,12 +3,6 @@
         "name": "",
         "email": ""
     },
-    "ryuha": {
-        "name": "",
-        "kata": {
-            "kata": true
-        }
-    },
     "kata": {
         "name": "",
         "description": "",
@@ -26,13 +20,6 @@
         "kata": {
             "kata": true
         },
-        "technical": {
-            "technical": true
-        },
-        "needs-practice": true
-    },
-    "movement": {
-        "name": "",
         "technical": {
             "technical": true
         },

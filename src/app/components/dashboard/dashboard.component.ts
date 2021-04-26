@@ -1,15 +1,16 @@
 
 import { SelectionModel } from '@angular/cdk/collections';
-import { AfterViewInit, Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, ComponentFactoryResolver, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
-import { MatListOption, MatSelectionList, MatSelectionListChange } from '@angular/material/list';
+import { MatListOption, MatSelectionListChange } from '@angular/material/list';
 import { MatDrawer } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
+import { Generalcomponent } from 'src/app/shared/generics/generalcomponent';
 import { Iaidoka } from 'src/app/shared/models/Iaidoka';
 import { User } from 'src/app/shared/models/User';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { OverallComponent } from '../overall/overall.component';
 import { UserinfoComponent } from '../userinfo/userinfo.component';
-import { UserinfoModule } from '../userinfo/userinfo.module';
 
 @Component({
   selector: 'app-dashboard',
@@ -29,8 +30,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   componentContainerRef!: ViewContainerRef ;
 
   selectedOptions?: SelectionModel<MatListOption>;
-  profile = "profile";
-  menu2 = "menu2";
+  home = "home";
   login = "login";
 
   selectedItem: any;
@@ -41,28 +41,18 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     private router: Router,
     private componentFactoryResolver: ComponentFactoryResolver) {}
 
-  ngAfterViewInit(): void {
+  ngAfterViewInit() {
     this.loadUserInfo();
   }
 
-  ngOnInit() {
-    
-    this.user = this.authService.userData;
+  async ngOnInit() {
   }
 
-  async loadUserInfo() {
-    if (this.user){
-      const iaidokaRef = this.afdb.database.ref(`iaidoka/${this.user.uid}`); 
-      const snap = await iaidokaRef.once('value');
-      this.iaidoka = snap.val();
-      if (this.iaidoka && (this.iaidoka.ryuha == null)) {
-        let componentFactory = this.componentFactoryResolver.resolveComponentFactory(UserinfoComponent);
-        this.componentContainerRef.clear();
-        const componentRef = this.componentContainerRef.createComponent<UserinfoComponent>(componentFactory);
-        componentRef.instance.iaidoka = this.iaidoka;
-      } else {
-        //load to dashboard
-      }
+  loadUserInfo() {
+    this.iaidoka = this.authService.iaidoka;
+    if (this.iaidoka) {
+      let componentRef = null;
+      componentRef = this.loadComponent(OverallComponent);
     }else {
       this.router.navigate(['/login']);
       window.alert('Please login first');
@@ -72,13 +62,30 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   onMenuitemClicked(event: MatSelectionListChange){
     this.selectedItem = event.options[0].value;
+    let componentRef = null;
+    switch (this.selectedItem) {
+      case "login":
+        this.authService.SignOut();
+        break;
+      case "home":
+        componentRef = this.loadComponent(OverallComponent);
+        break;
+    }
+  }
+  loadComponent(component: Type<Generalcomponent>): any {
     this.componentContainerRef.clear();
-    if (this.selectedItem === "login") {
-      this.authService.SignOut();
-    } else if (this.selectedItem === "profile"){
-      let componentFactory = this.componentFactoryResolver.resolveComponentFactory(UserinfoComponent);
-      const componentRef = this.componentContainerRef.createComponent<UserinfoComponent>(componentFactory);
-      componentRef.instance.iaidoka = this.iaidoka;
-    }   
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
+    return this.componentContainerRef.createComponent<Component>(componentFactory);
+  }
+
+  onAccountClicked(){
+    let componentRef = null;
+    componentRef = this.loadComponent(UserinfoComponent);
+    componentRef.instance.iaidoka = this.iaidoka;      
+    componentRef.instance.cancel.subscribe( (c: boolean) => {
+      if (c) {
+        componentRef = this.loadComponent(OverallComponent);
+      }
+    });
   }
 }

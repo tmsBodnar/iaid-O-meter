@@ -16,6 +16,9 @@ import { AuthModule } from './components/auth/auth.module';
 import { ComponentContainerDirective } from './shared/directives/component-container.directive';
 import { UserinfoComponent } from './components/userinfo/userinfo.component';
 import { UserinfoModule } from './components/userinfo/userinfo.module';
+import { OverallComponent } from './components/overall/overall.component';
+import { OverallModule } from './components/overall/overall.module';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 @NgModule({
@@ -26,6 +29,8 @@ import { UserinfoModule } from './components/userinfo/userinfo.module';
   imports: [
     DashboardModule,
     UserinfoModule,
+    OverallModule,
+    MatNativeDateModule,
     AuthModule,
     BrowserModule,
     CommonModule,

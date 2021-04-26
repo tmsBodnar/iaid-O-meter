@@ -1,24 +1,25 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ComponentRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { Generalcomponent } from 'src/app/shared/generics/generalcomponent';
 import { Iaidoka } from 'src/app/shared/models/Iaidoka';
-import { Ryuha } from 'src/app/shared/models/Ryuha';
+import { FirebaseService } from 'src/app/shared/services/firebase/firebase.service';
 
 @Component({
   selector: 'app-userinfo',
   templateUrl: './userinfo.component.html',
   styleUrls: ['./userinfo.component.css']
 })
-export class UserinfoComponent implements OnInit {
+export class UserinfoComponent implements OnInit, Generalcomponent{
 
   @Input()
   iaidoka?: Iaidoka;
 
-  ryuha?: Ryuha;
+  @Output()
+  cancel = new Subject<boolean>();
 
   nameDisabled = true;
   emailDisabled = true;
-  ryuhaDisabled = true;
 
   clicked = false;
 
@@ -26,35 +27,37 @@ export class UserinfoComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router
+    private firebaseService: FirebaseService
   ) {
     this.userForm = this.formBuilder.group({
       'name': [ this.iaidoka?.name, Validators.compose([Validators.required])],
       'email': [ this.iaidoka?.email, Validators.compose([Validators.required, Validators.email])],
-      'ryuha' : [ this.ryuha?.name, Validators.compose([Validators.required])]
     });
    }
 
-  ngOnInit(): void {
-    this.ryuha = this.iaidoka?.ryuha;
+  async ngOnInit(){
     this.userForm.controls['name'].setValue(this.iaidoka?.name);
     this.userForm.controls['email'].setValue(this.iaidoka?.email);
-    this.userForm.controls['ryuha'].setValue(this.iaidoka?.ryuha?.name);
   }
 
-  onFormSubmit(){
-    this.ryuha = {
-      name:  this.userForm.controls['ryuha'].value
-    }
-    this.iaidoka!.name = this.userForm.controls['name'].value,
-    this.iaidoka!.email = this.userForm.controls['email'].value,
-    this.iaidoka!.ryuha = this.ryuha
+  async onFormSubmit(){
+    const email = 
+      this.iaidoka!.email !==  this.userForm.controls['email'].value ?
+      this.userForm.controls['email'].value :
+      this.iaidoka!.email;
+    const iaidokaName = 
+      this.iaidoka!.name !== this.userForm.controls['name'].value ?
+      this.userForm.controls['name'].value :
+      this.iaidoka!.name;
+    this.iaidoka!.name = iaidokaName
+    this.iaidoka!.email = email
     this.clicked = true;
-    console.log(this.iaidoka);
+    await this.firebaseService.updateIaidoka(this.iaidoka!);
+    this.onCancelClicked();
   }
 
   onCancelClicked(){
-    this.router.navigate(['dashboard']);
+    this.cancel.next(true);
   }
 
 }
