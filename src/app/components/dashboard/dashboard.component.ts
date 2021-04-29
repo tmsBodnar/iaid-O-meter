@@ -1,6 +1,6 @@
 
 import { SelectionModel } from '@angular/cdk/collections';
-import { AfterViewInit, Component, ComponentFactoryResolver, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterContentInit, AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { MatListOption, MatSelectionListChange } from '@angular/material/list';
 import { MatDrawer } from '@angular/material/sidenav';
@@ -24,10 +24,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   showSidebar = false;
 
   @ViewChild("drawer")
-  drawer!: MatDrawer
+  drawer?: MatDrawer
 
   @ViewChild('componentcontainer',  { read: ViewContainerRef })
-  componentContainerRef!: ViewContainerRef ;
+  componentContainerRef?: ViewContainerRef ;
 
   selectedOptions?: SelectionModel<MatListOption>;
   home = "home";
@@ -39,25 +39,32 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     public authService: AuthService,
     public afdb: AngularFireDatabase,
     private router: Router,
-    private componentFactoryResolver: ComponentFactoryResolver) {}
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private ref: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
-    this.loadUserInfo();
+    this.ref.detectChanges();
   }
+
 
   async ngOnInit() {
+     await this.loadUserInfo();  
   }
 
-  loadUserInfo() {
-    this.iaidoka = this.authService.iaidoka;
-    if (this.iaidoka) {
-      let componentRef = null;
-      componentRef = this.loadComponent(OverallComponent);
-    }else {
-      this.router.navigate(['/login']);
-      window.alert('Please login first');
-    }
-    
+  async loadUserInfo() {
+    await setTimeout(() => {
+      if (this.drawer?.opened) {
+        this.drawer.toggle();
+      }
+      this.iaidoka = this.authService.iaidoka;
+      if (this.iaidoka) {
+        let componentRef = null;
+        componentRef = this.loadComponent(OverallComponent);
+      }else {
+        this.router.navigate(['/login']);
+        window.alert('Please login first');
+      }
+    }, 100);
   }
 
   onMenuitemClicked(event: MatSelectionListChange){
@@ -73,9 +80,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     }
   }
   loadComponent(component: Type<Generalcomponent>): any {
-    this.componentContainerRef.clear();
+    this.componentContainerRef?.clear();
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
-    return this.componentContainerRef.createComponent<Component>(componentFactory);
+    return this.componentContainerRef?.createComponent<Component>(componentFactory);
   }
 
   onAccountClicked(){

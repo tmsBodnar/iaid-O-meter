@@ -4,3 +4,6 @@
     min-width: 270px;
     padding-top: 10em;
 }  
+:host::ng-deep.event-style.mat-calendar-body-cell-content.mat-focus-indicator {
+    background: red !important;
+}
