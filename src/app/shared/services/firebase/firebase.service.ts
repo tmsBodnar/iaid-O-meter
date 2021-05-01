@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Iaidoka } from '../../models/Iaidoka';
+import { Kata } from '../../models/Kata';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class FirebaseService {
   }
 
   async getIaidokaById(uid: string): Promise<Iaidoka> {
-    const iaidokaRef = this.afdb.database.ref(`iaidoka/${uid}`); 
+    const iaidokaRef = this.db.database.ref(`iaidoka/${uid}`); 
     const snap = await iaidokaRef.once('value');
     return snap.val();
   }
@@ -37,5 +38,11 @@ export class FirebaseService {
   async updateIaidoka(iaidoka:Iaidoka){
     const userRef = this.db.ref(`iaidoka/${iaidoka.uid}`);
     return await userRef.update(iaidoka);
+  }
+
+  async getAllKatasForUser(uid?: number): Promise<Kata[]> {
+    const kataListREf = this.db.ref(`kata/iaidoka/${uid}`);
+    const snap = kataListREf.on('value');
+    return snap.val()
   }
 }

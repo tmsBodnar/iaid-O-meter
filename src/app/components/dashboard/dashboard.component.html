@@ -15,7 +15,8 @@
     <mat-selection-list #menuitems [multiple]="false" (selectionChange)="onMenuitemClicked($event)"
     selectedOptions="selectedOptions" (click)="drawer.toggle()">
       <mat-list-option [value]="home">Home</mat-list-option>
-      <mat-list-option [value]="login">Logout</mat-list-option>
+      <mat-list-option [value]="kata">Kata</mat-list-option>
+      <mat-list-option [value]="logout">Logout</mat-list-option>
     </mat-selection-list>
   </mat-drawer>
 

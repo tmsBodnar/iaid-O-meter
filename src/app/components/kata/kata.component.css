@@ -1,0 +1,8 @@
+.float-button {
+    position: fixed;
+    bottom: 100px;
+    right: 100px;
+}
+:host::ng-deep .mat-icon{ 
+    font-size: 48px !important;
+}

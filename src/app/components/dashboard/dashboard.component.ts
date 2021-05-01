@@ -1,6 +1,6 @@
 
 import { SelectionModel } from '@angular/cdk/collections';
-import { AfterContentInit, AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { MatListOption, MatSelectionListChange } from '@angular/material/list';
 import { MatDrawer } from '@angular/material/sidenav';
@@ -9,6 +9,7 @@ import { Generalcomponent } from 'src/app/shared/generics/generalcomponent';
 import { Iaidoka } from 'src/app/shared/models/Iaidoka';
 import { User } from 'src/app/shared/models/User';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { KataComponent } from '../kata/kata.component';
 import { OverallComponent } from '../overall/overall.component';
 import { UserinfoComponent } from '../userinfo/userinfo.component';
 
@@ -31,7 +32,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   selectedOptions?: SelectionModel<MatListOption>;
   home = "home";
-  login = "login";
+  kata = "kata"
+  logout = "logout";
 
   selectedItem: any;
 
@@ -69,20 +71,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   onMenuitemClicked(event: MatSelectionListChange){
     this.selectedItem = event.options[0].value;
-    let componentRef = null;
-    switch (this.selectedItem) {
-      case "login":
-        this.authService.SignOut();
-        break;
-      case "home":
-        componentRef = this.loadComponent(OverallComponent);
-        break;
-    }
-  }
-  loadComponent(component: Type<Generalcomponent>): any {
-    this.componentContainerRef?.clear();
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
-    return this.componentContainerRef?.createComponent<Component>(componentFactory);
+    this.navigateBySelected(this.selectedItem);
   }
 
   onAccountClicked(){
@@ -91,8 +80,29 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     componentRef.instance.iaidoka = this.iaidoka;      
     componentRef.instance.cancel.subscribe( (c: boolean) => {
       if (c) {
-        componentRef = this.loadComponent(OverallComponent);
+        this.navigateBySelected(this.selectedItem);
       }
     });
+  }
+  
+  navigateBySelected(selectedItem: any) {
+    let componentRef = null;
+    switch (selectedItem) {
+      case "logout":
+        this.authService.SignOut();
+        break;
+      case "home":
+        componentRef = this.loadComponent(OverallComponent);
+        break;
+      case "kata":
+        componentRef = this.loadComponent(KataComponent);
+        break;
+    }
+  }
+  
+  loadComponent(component: Type<Generalcomponent>): any {
+    this.componentContainerRef?.clear();
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
+    return this.componentContainerRef?.createComponent<Component>(componentFactory);
   }
 }

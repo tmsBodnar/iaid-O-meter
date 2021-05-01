@@ -3,39 +3,57 @@
         "name": "",
         "email": ""
     },
+    "kata-of-iaidoka": {
+        "iaidoka-uid":{
+            "kata-uid": true
+        }
+    },
+    "iaidoka-of-kata":{
+        "kata-uid":{
+            "iaidoka-uid": true
+        }
+    },
     "kata": {
         "name": "",
         "description": "",
         "number": "",
-        "ryuha": "",
-        "jakukante": {
-            "jakukante": true
-        },
-        "movement": {
-            "movement": true
+        "ryuha": ""
+    },
+    "jakukante-in-kata":{
+        "jakukante-uid": {
+            "kata-uid": true
+        }
+    },
+    "kata-in-jakukante":{
+        "kata-uid": {
+            "jakukantee-uid": true
         }
     },
     "jakukante": {
         "description": "",
-        "kata": {
-            "kata": true
-        },
-        "technical": {
-            "technical": true
-        },
         "needs-practice": true
     },
+    "technical-in-jakukante":{
+        "technical-uid":{
+            "jakukante-uid": true
+        }
+    },
+    "jakukante-in-technical":{
+        "jakukante-uid":{
+            "technical-uid": true
+        }
+    },
     "technical": {
-        "description": "",
-        "priority": "",
-        "jakukante": {
-            "jakukante": true
-        },
-        "movement": {
-            "kata": true
-        },
-        "media": {
-            "media": true
+        "description": ""
+    },
+    "media-in-technical":{
+        "media-uid":{
+            "technical-uid": true
+        }
+    },
+    "technical-in-media":{
+        "technical-uid":{
+            "media-uid": true
         }
     },
     "media": {
@@ -45,9 +63,21 @@
     },
     "training": {
         "date": "",
-        "kata": {
-            "kata": true
+        "iaidoka-uid": true
+    },
+    "training-of-kata":{
+        "training-uid":{
+            "kata-uid": true
+        }
+    },
+    "kata-in-training":{
+        "kata-uid":{
+            "trainig-uid": true
+        }
+    },
+    "iaidokas-trainig":{
+        "iaidoka-uid":{
+            "training-uid":true
         }
     }
-
 }
