@@ -23,6 +23,7 @@ export class KataComponent implements OnInit {
 
   async ngOnInit() {
     this.katas = await this.firebaseService.getAllKatasForUser(this.authService.iaidoka?.uid);
+    console.log(this.katas);
   }
 
   onPlusKataClicked(){

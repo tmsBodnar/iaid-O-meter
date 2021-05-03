@@ -100,6 +100,7 @@ export class AuthService {
     try{
       const provider =  new firebase.auth.GoogleAuthProvider();
       const cred = await this.afAuth.signInWithPopup(provider);
+      console.log(cred);
       if (cred.user) {
         await this.firebaseService.updateUserData(cred.user);
         this.iaidoka = await this.firebaseService.getIaidokaById(cred.user.uid);
