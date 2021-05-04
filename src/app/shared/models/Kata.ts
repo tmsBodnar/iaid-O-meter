@@ -3,9 +3,10 @@ import { Media } from "./Media";
 import { Technic } from "./Technic";
 
 export interface Kata {
+    uid?: string;
     name: String;
     number: number;
-    details: String;
+    description: String;
     medias: Media[];
     jakukantes: Jakukante[];
     technics: Technic[];

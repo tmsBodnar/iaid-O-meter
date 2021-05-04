@@ -29,11 +29,13 @@ export class KataComponent implements OnInit {
   onPlusKataClicked(){
     const dialogRef = this.dialog.open(KataEditDialogComponent, {
       width: '250px',
-      data: {kata: this.kata}
+      data: this.kata
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result, 'The dialog was closed');
+    dialogRef.afterClosed().subscribe(async result => {
+      this.kata = result;
+      
+      await this.firebaseService.saveKata(this.kata!);
     });
   }
 }

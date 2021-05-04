@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Kata } from 'src/app/shared/models/Kata';
 
@@ -9,15 +10,45 @@ import { Kata } from 'src/app/shared/models/Kata';
 })
 export class KataEditDialogComponent implements OnInit {
 
-  dialogHeader= "add new Kata";
+  dialogHeader= "Add new Kata";
+  kataForm: FormGroup;
+  selectedKata?: Kata;
 
-  constructor( public dialogRef: MatDialogRef<KataEditDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public kata: Kata) { }
+  constructor( 
+    public dialogRef: MatDialogRef<KataEditDialogComponent>,
+    private fb: FormBuilder,
+    @Inject(MAT_DIALOG_DATA,) public kata?: Kata) {
+      this.kataForm = this.fb.group({
+        'name': [this.kata?.name, Validators.required],
+        'description': [this.kata?.description, Validators.required],
+        'number': [this.kata?.number, Validators.required]
+      });
+     }
 
   ngOnInit(): void {
-    if(this.kata) {
-      this.dialogHeader = "Edit " + this.kata.name;
+    this.selectedKata = this.kata;
+    if(this.selectedKata) {
+      this.dialogHeader = "Edit " + this.selectedKata.name;
+
     }
+  }
+
+  onSaveClicked(){
+    if(this.selectedKata){
+      this.selectedKata.name = this.kataForm.controls['name'].value;
+      this.selectedKata.description = this.kataForm.controls['description'].value;
+      this.selectedKata.number = this.kataForm.controls['number'].value;
+    } else {
+      this.selectedKata = {
+        name: this.kataForm.controls['name'].value,
+        description: this.kataForm.controls['description'].value,
+        number: this.kataForm.controls['number'].value,
+        medias: [],
+        jakukantes: [],
+        technics: []
+      }
+    }
+    this.dialogRef.close(this.selectedKata);
   }
 
   onCancelClick(){

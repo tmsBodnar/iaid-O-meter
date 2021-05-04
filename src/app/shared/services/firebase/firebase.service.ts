@@ -7,7 +7,6 @@ import { Kata } from '../../models/Kata';
   providedIn: 'root'
 })
 export class FirebaseService {
-
   private db : any;
 
   constructor(
@@ -53,5 +52,15 @@ export class FirebaseService {
       result.push(katas.val());
      });
     return result;
+  }
+
+  async saveKata(result: Kata) {
+    if (!result.uid) {
+      const kataRef = this.db.ref(`kata/`);
+      return await kataRef.push(result);
+    } else {
+    const kataRef = this.db.ref(`kata/${result.uid}`);
+    return await kataRef.update(result);
+    }
   }
 }
