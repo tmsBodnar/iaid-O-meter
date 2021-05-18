@@ -1,5 +1,5 @@
 <div class="main-wrapper">
-  <mat-calendar [dateClass]="dateClass()">
+  <mat-calendar [dateClass]="dateClass()" [selected]="selectedDate" (selectedChange)="onSelect($event)">
 
   </mat-calendar>
 </div>
