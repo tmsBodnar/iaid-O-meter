@@ -8,7 +8,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { KataEditDialogComponent } from './kata-edit-dialog/kata-edit-dialog.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
+import {MatCardModule} from '@angular/material/card';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 @NgModule({
@@ -24,7 +25,9 @@ import { MatInputModule } from '@angular/material/input';
     MatButtonModule,
     MatDialogModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatCardModule,
+    MatExpansionModule
   ]
 })
 export class KataModule { }

@@ -3,7 +3,7 @@
     <form [formGroup]="kataForm">
         <mat-form-field>
             <mat-label>Name:</mat-label>
-            <input matInput formControlName="name">
+            <textarea  matInput formControlName="name"></textarea>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Description:</mat-label>
@@ -12,6 +12,10 @@
         <mat-form-field>
             <mat-label>Number:</mat-label>
             <input matInput formControlName="number">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Ryuha:</mat-label>
+            <input matInput formControlName="ryuha">
         </mat-form-field>
     </form>
 </div>

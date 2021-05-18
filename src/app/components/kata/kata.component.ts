@@ -23,7 +23,6 @@ export class KataComponent implements OnInit {
 
   async ngOnInit() {
     this.katas = await this.firebaseService.getAllKatasForUser(this.authService.iaidoka?.uid);
-    console.log(this.katas);
   }
 
   onPlusKataClicked(){
@@ -33,9 +32,9 @@ export class KataComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(async result => {
-      this.kata = result;
-      
-      await this.firebaseService.saveKata(this.kata!);
+      this.kata = result; 
+      await this.firebaseService.saveKata(this.kata!, this.authService.iaidoka!);
+      this.katas = await this.firebaseService.getAllKatasForUser(this.authService.iaidoka?.uid);
     });
   }
 }

@@ -21,7 +21,8 @@ export class KataEditDialogComponent implements OnInit {
       this.kataForm = this.fb.group({
         'name': [this.kata?.name, Validators.required],
         'description': [this.kata?.description, Validators.required],
-        'number': [this.kata?.number, Validators.required]
+        'number': [this.kata?.number, Validators.required],
+        'ryuha': [this.kata?.ryuha, Validators.required],
       });
      }
 
@@ -38,11 +39,13 @@ export class KataEditDialogComponent implements OnInit {
       this.selectedKata.name = this.kataForm.controls['name'].value;
       this.selectedKata.description = this.kataForm.controls['description'].value;
       this.selectedKata.number = this.kataForm.controls['number'].value;
+      this.selectedKata.ryuha = this.kataForm.controls['ryuha'].value;
     } else {
       this.selectedKata = {
         name: this.kataForm.controls['name'].value,
         description: this.kataForm.controls['description'].value,
         number: this.kataForm.controls['number'].value,
+        ryuha: this.kataForm.controls['ryuha'].value,
         medias: [],
         jakukantes: [],
         technics: []
