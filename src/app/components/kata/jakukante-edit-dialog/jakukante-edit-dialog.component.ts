@@ -12,13 +12,13 @@ import { Kata } from 'src/app/shared/models/Kata';
 export class JakukanteEditDialogComponent implements OnInit {
 
   jakukanteForm: FormGroup;
-  jakukante?: Jakukante;
 
   constructor(public dialogRef: MatDialogRef<JakukanteEditDialogComponent>,
     private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA,) public data: any) {
+    @Inject(MAT_DIALOG_DATA,) public jakukante: Jakukante) {
       this.jakukanteForm = this.fb.group({
-        'description': [this.data.jakukante?.description, Validators.required],
+        'name': [this.jakukante?.name, Validators.required],
+        'description': [this.jakukante?.description, Validators.required]
       });
   
     }
@@ -26,10 +26,14 @@ export class JakukanteEditDialogComponent implements OnInit {
   }
 
   onSaveClicked(){
-    this.dialogRef.close(this.data);
+    this.jakukante = {
+      name: this.jakukanteForm.controls['name'].value,
+      description : this.jakukanteForm.controls['description'].value,
+      technics: []
+    }
+    this.dialogRef.close(this.jakukante);
   }
   onCancelClick(){
     this.dialogRef.close();
   }
-
 }

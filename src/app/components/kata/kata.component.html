@@ -1,6 +1,6 @@
 <div class="kata-wrapper">
     <div>
-        <mat-expansion-panel *ngFor="let kata of katas">
+        <mat-expansion-panel *ngFor="let kata of katas; let i = index; trackBy: TrackByKataUid">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 {{kata.name}}
@@ -34,8 +34,8 @@
                           </button>
                         </div>
                     </div>
-                    <mat-list-item *ngFor="let jakukante of jakukantes">
-                      <mat-icon mat-list-icon>meditation</mat-icon>
+                    <mat-list-item *ngFor="let jakukante of kata.jakukantes; let i = index; trackBy: TrackByJakukanteUid">
+                      <div mat-line> {{jakukante.name}} </div>
                       <div mat-line> {{jakukante.description}} </div>
                       <mat-accordion>
                         <mat-expansion-panel *ngFor="let technic of technics">

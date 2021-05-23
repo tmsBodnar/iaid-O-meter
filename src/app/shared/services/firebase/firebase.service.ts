@@ -49,11 +49,35 @@ export class FirebaseService {
     await kataListREf.on('value', async (snapShot: DataSnapshot) => {
       let map: Map<String, boolean> = new Map();
       map = snapShot.val();
-      for (const key of Object.keys(map)){
-        const kataRef = this.db.ref(`kata/${key}`);
-        const katas = await kataRef.once('value');
-        result.push(katas.val());
+      if (map) {
+        for (const key of Object.keys(map)){
+          const kataRef = this.db.ref(`kata/${key}`);
+          const kataSnap = await kataRef.once('value');
+          const kata = kataSnap.val();
+          kata.uid = key;
+          kata.jakukantes = await this.getJakukanteForKata(key);
+          result.push(kata);
+        }
       }
+  });
+  return result;
+}
+
+async getJakukanteForKata(uid: string): Promise<Jakukante[]> {
+  let result: Jakukante[] = [];
+  const jakukanteListRef = this.db.ref(`kata-jakukante/${uid}`);
+  await jakukanteListRef.on('value', async (snapShot: DataSnapshot) => {
+    let map: Map<String, boolean> = new Map();
+    map = snapShot.val();
+    if(map) {
+      for (const key of Object.keys(map)){
+        const jakukanteRef = this.db.ref(`jakukante/${key}`);
+        const jakukanteSnap = await jakukanteRef.once('value');
+        const jakukante = jakukanteSnap.val();
+        jakukante.uid = key;
+        result.push(jakukante);
+      }
+  }
   });
   return result;
 }
@@ -103,5 +127,18 @@ export class FirebaseService {
   }
   async saveJakukante(jakukante: Jakukante, kata: Kata) {
     console.log(jakukante, kata);
+    if (!jakukante.uid) {
+      const jakukanteRef = this.db.ref(`jakukante/`);
+      const jakukanteSnap = await jakukanteRef.push(jakukante);
+      const key = jakukanteSnap.getKey();
+      const kataJakukanteRef = this.db.ref(`kata-jakukante/${kata?.uid}/${key}`).push();
+      this.db.ref(`kata-jakukante/${kata?.uid}/`).child(key).set(true);
+      return jakukanteSnap.value;
+    } else {
+    const jakukanteRef = this.db.ref(`jakukante/${jakukante.uid}`);
+    return await jakukanteRef.update(jakukante);
+    }
   }
+
+
 }
