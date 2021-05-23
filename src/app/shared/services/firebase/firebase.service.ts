@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, snapshotChanges } from '@angular/fire/database';
+import { AngularFireDatabase } from '@angular/fire/database';
 import { DataSnapshot } from '@angular/fire/database/interfaces';
-import { KataComponent } from 'src/app/components/kata/kata.component';
 import { Iaidoka } from '../../models/Iaidoka';
+import { Jakukante } from '../../models/Jakukante';
 import { Kata } from '../../models/Kata';
-import { AuthService } from '../auth/auth.service';
+import { Keiko } from '../../models/Keiko';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
+
   private db : any;
 
   constructor(
@@ -24,7 +25,6 @@ export class FirebaseService {
     return snap.val();
   }
 
-  // update user data
   async updateUserData(user: any) {
     const iaidoka = await this.getIaidokaById(user.uid) 
     if (!iaidoka) {
@@ -49,9 +49,7 @@ export class FirebaseService {
     await kataListREf.on('value', async (snapShot: DataSnapshot) => {
       let map: Map<String, boolean> = new Map();
       map = snapShot.val();
-      console.log(map);
       for (const key of Object.keys(map)){
-        console.log(key);
         const kataRef = this.db.ref(`kata/${key}`);
         const katas = await kataRef.once('value');
         result.push(katas.val());
@@ -60,17 +58,50 @@ export class FirebaseService {
   return result;
 }
 
-  async saveKata(result: Kata, iaidoka?: Iaidoka) {
-    if (!result.uid) {
+  async saveKata(kata: Kata, iaidoka?: Iaidoka) {
+    if (!kata.uid) {
       const kataRef = this.db.ref(`kata/`);
-      const kataSnap = await kataRef.push(result);
+      const kataSnap = await kataRef.push(kata);
       const key = kataSnap.getKey();
       const iaidokaKataRef = this.db.ref(`iaidoka-kata/${iaidoka?.uid}/${key}`).push();
       this.db.ref(`iaidoka-kata/${iaidoka?.uid}/`).child(key).set(true);
       return kataSnap.value;
     } else {
-    const kataRef = this.db.ref(`kata/${result.uid}`);
-    return await kataRef.update(result);
+    const kataRef = this.db.ref(`kata/${kata.uid}`);
+    return await kataRef.update(kata);
     }
+  }
+
+  async getAllKeikoForIaidoka(uid?: number) : Promise<Keiko[]> {
+    let result: Keiko[] = [];
+    const keikosRef = this.db.ref(`iaidoka-keiko/${uid}`);
+    await keikosRef.on('value', async (snapShot: DataSnapshot) => {
+      let map: Map<String, boolean> = new Map();
+      map = snapShot.val();
+      if(map){
+      for (const key of Object.keys(map)){
+        const keikoRef = this.db.ref(`keiko/${key}`);
+        const keiko = await keikoRef.once('value');
+        result.push(keiko.val());
+      }
+    }
+  });
+    return result;
+  }
+  async saveKeiko(keiko: Keiko, iaidoka?: Iaidoka) {
+    if (!keiko.uid) {
+      const keikoRef = this.db.ref(`keiko/`);
+      const keikoSnap = await keikoRef.push(keiko);
+      const key = keikoSnap.getKey();
+      const iaidokaKeikoRef = this.db.ref(`iaidoka-keiko/${iaidoka?.uid}/${key}`).push();
+      this.db.ref(`iaidoka-keiko/${iaidoka?.uid}/`).child(key).set(true);
+      return keikoSnap.value;
+    } else {
+    const keikoRef = this.db.ref(`keiko/${keiko.uid}`);
+    return await keikoRef.update(keiko);
+    }
+  }
+  async saveJakukante(jakukante: Jakukante, kata: Kata) {
+    console.log(jakukante, kata);
   }
 }

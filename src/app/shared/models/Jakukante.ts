@@ -2,7 +2,7 @@ import { Kata } from "./Kata";
 import { Technic } from "./Technic";
 
 export interface Jakukante {
-    details: String;
-    katas: Kata[];
+    description: String;
+    needsPractice: boolean;
     technics: Technic[];
 }

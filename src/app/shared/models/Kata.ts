@@ -9,6 +9,5 @@ export interface Kata {
     description: String;
     medias: Media[];
     jakukantes: Jakukante[];
-    technics: Technic[];
     ryuha: String;
 }

@@ -1,5 +1,4 @@
-import { AfterContentInit, AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { AfterContentInit,  ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { Keiko } from 'src/app/shared/models/Keiko';

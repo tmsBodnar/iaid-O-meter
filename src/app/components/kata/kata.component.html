@@ -1,9 +1,10 @@
-<div class="main-wrapper">
+<div class="kata-wrapper">
     <div>
         <mat-expansion-panel *ngFor="let kata of katas">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 {{kata.name}}
+                
               </mat-panel-title>
               <mat-panel-description>
                 {{kata.number}} / {{kata.ryuha}}
@@ -11,29 +12,47 @@
             </mat-expansion-panel-header>    
             <mat-card>
               <mat-card-header>
-                <div mat-card-avatar class="example-header-image"></div>
-                <mat-card-title>Shiba Inu</mat-card-title>
-                <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+                <mat-card-title>
+                  <div class="flex-title">
+                  {{kata.name}}
+                    <button mat-icon-button color='primary' style="margin-left: auto;" (click)="onEditKataClicked(kata)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                  </div>
+                </mat-card-title>
               </mat-card-header>
-              <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
               <mat-card-content>
                 <p>
-                  The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-                  A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-                  bred for hunting.
+                  {{kata.description}}
                 </p>
+                  <mat-list>
+                    <div mat-subheader>
+                      <div class="flex-title">
+                        Jakukante:
+                          <button mat-icon-button color='primary' style="margin-left: auto;" (click)="onNewJakukanteClicked(kata)">
+                            <mat-icon>add</mat-icon>
+                          </button>
+                        </div>
+                    </div>
+                    <mat-list-item *ngFor="let jakukante of jakukantes">
+                      <mat-icon mat-list-icon>meditation</mat-icon>
+                      <div mat-line> {{jakukante.description}} </div>
+                      <mat-accordion>
+                        <mat-expansion-panel *ngFor="let technic of technics">
+                          <p>{{technic.description}}</p>
+                        </mat-expansion-panel>
+                        </mat-accordion>
+                    </mat-list-item>
+                  </mat-list>
               </mat-card-content>
-              <mat-card-actions>
-                <button mat-button>LIKE</button>
-                <button mat-button>SHARE</button>
-              </mat-card-actions>
             </mat-card>    
           </mat-expansion-panel>
     </div>
 
-    <div class="float-button">
-        <button mat-icon-button color='primary' (click)="onPlusKataClicked()">
-            <mat-icon class="md-48">add_circle</mat-icon>
+    <div class="new-btn">
+        <button mat-raised-button color='primary' (click)="onPlusKataClicked()">
+            <mat-icon style="margin: 5px;">add_circle</mat-icon>
+            <span>Add new kata</span>
         </button>
     </div>
 </div>

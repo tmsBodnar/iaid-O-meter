@@ -20,6 +20,6 @@
     </form>
 </div>
 <div mat-dialog-actions>
-    <button mat-button (click)="onSaveClicked()" cdkFocusInitial>Ok</button>
+    <button mat-button (click)="onSaveClicked()" cdkFocusInitial [disabled]="kataForm.invalid">Ok</button>
     <button mat-button (click)="onCancelClick()">Cancel</button>
 </div>

@@ -1,16 +1,12 @@
 {
     "Iaidoka":{
+        "uid": 1,
         "name": "",
         "email": ""
     },
-    "kata-of-iaidoka": {
+    "iaidoka-kata":{
         "iaidoka-uid":{
             "kata-uid": true
-        }
-    },
-    "iaidokas-kata":{
-        "kata-uid":{
-            "iaidoka-uid": true
         }
     },
     "kata": {
@@ -19,26 +15,16 @@
         "number": "",
         "ryuha": ""
     },
-    "jakukante-in-kata":{
-        "jakukante-uid": {
-            "kata-uid": true
-        }
-    },
-    "kata-in-jakukante":{
+    "kata-jakukante":{
         "kata-uid": {
-            "jakukantee-uid": true
+            "jakukante-uid": true
         }
     },
     "jakukante": {
         "description": "",
         "needs-practice": true
     },
-    "technical-in-jakukante":{
-        "technical-uid":{
-            "jakukante-uid": true
-        }
-    },
-    "jakukante-in-technical":{
+    "jakukante-technical":{
         "jakukante-uid":{
             "technical-uid": true
         }
@@ -46,13 +32,8 @@
     "technical": {
         "description": ""
     },
-    "media-in-technical":{
-        "media-uid":{
-            "technical-uid": true
-        }
-    },
-    "technical-in-media":{
-        "technical-uid":{
+    "kata-media": {
+        "kata-uid":{
             "media-uid": true
         }
     },
@@ -61,23 +42,24 @@
         "path": "",
         "isPicture": true
     },
-    "training": {
-        "date": "",
-        "iaidoka-uid": true
+    "keiko": {
+        "start": "",
+        "stop": ""
     },
-    "training-of-kata":{
-        "training-uid":{
+    "keiko-kata":{
+        "keiko-uid":{
             "kata-uid": true
         }
     },
-    "kata-in-training":{
-        "kata-uid":{
-            "trainig-uid": true
+    
+    "keiko-jakukante":{
+        "keiko-uid":{
+            "jakukante-uid": true
         }
     },
-    "iaidokas-trainig":{
+    "iaidoka-keiko":{
         "iaidoka-uid":{
-            "training-uid":true
+            "keiko-uid":true
         }
     }
 }

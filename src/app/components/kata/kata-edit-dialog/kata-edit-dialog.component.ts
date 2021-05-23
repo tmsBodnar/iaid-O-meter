@@ -48,7 +48,6 @@ export class KataEditDialogComponent implements OnInit {
         ryuha: this.kataForm.controls['ryuha'].value,
         medias: [],
         jakukantes: [],
-        technics: []
       }
     }
     this.dialogRef.close(this.selectedKata);

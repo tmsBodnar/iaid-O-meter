@@ -10,12 +10,16 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatListModule} from '@angular/material/list';
+import { JakukanteEditDialogComponent } from './jakukante-edit-dialog/jakukante-edit-dialog.component';
+
 
 
 @NgModule({
   declarations: [
     KataComponent,
-    KataEditDialogComponent
+    KataEditDialogComponent,
+    JakukanteEditDialogComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +31,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatListModule
   ]
 })
 export class KataModule { }

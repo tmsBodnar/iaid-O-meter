@@ -1,8 +1,20 @@
-.float-button {
-    position: fixed;
-    bottom: 100px;
-    right: 100px;
+.new-btn {
+    margin-top: 20px;
+    float: right;
+    
 }
-:host::ng-deep .mat-icon{ 
-    font-size: 48px !important;
+.kata-wrapper {
+    width: 80%;
+    margin: auto;
+    min-width: 480px;
+    padding-top: 10em;
+}
+:host::ng-deep .mat-card-header-text{
+    width: 100% !important;
+}
+.flex-title{
+    height: 40px;
+    display: flex;
+    width: 100%;
+    align-items: center;
 }
