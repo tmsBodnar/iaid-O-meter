@@ -28,7 +28,6 @@ export class KataComponent implements OnInit {
 
   async ngOnInit() {
     this.katas = await this.firebaseService.getAllKatasForUser(this.authService.iaidoka?.uid);
-    console.log(this.katas);
   }
 
   onPlusKataClicked(){
@@ -41,7 +40,6 @@ export class KataComponent implements OnInit {
       if(result){
         this.kata = result; 
         await this.firebaseService.saveKata(this.kata!, this.authService.iaidoka!);
-        this.katas = await this.firebaseService.getAllKatasForUser(this.authService.iaidoka?.uid);
       }
     });
   }
@@ -52,14 +50,15 @@ export class KataComponent implements OnInit {
   onNewJakukanteClicked(kata: Kata){
     this.kata = kata;
     const dialogRef = this.dialog.open(JakukanteEditDialogComponent, {
-      width: '500px',
+      width: '300px',
       data: null
     });
 
     dialogRef.afterClosed().subscribe(async result => {
       if(result){
-        await this.firebaseService.saveJakukante(result, this.kata!);
-  //      this.katas = await this.firebaseService.getAllKatasForUser(this.authService.iaidoka?.uid);
+        const savedJakukanteUid = await this.firebaseService.saveJakukante(result, this.kata!);
+        result.uid = savedJakukanteUid
+        this.kata?.jakukantes.push(result);
       }
     });
   }

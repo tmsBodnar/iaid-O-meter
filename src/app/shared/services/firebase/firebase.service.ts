@@ -45,18 +45,19 @@ export class FirebaseService {
 
   async getAllKatasForUser(uid?: number): Promise<Kata[]> {
     let result: Kata[] = [];
+    let map: Map<String, boolean> = new Map();
     const kataListREf = this.db.ref(`iaidoka-kata/${uid}`);
     await kataListREf.on('value', async (snapShot: DataSnapshot) => {
-      let map: Map<String, boolean> = new Map();
       map = snapShot.val();
       if (map) {
         for (const key of Object.keys(map)){
           const kataRef = this.db.ref(`kata/${key}`);
-          const kataSnap = await kataRef.once('value');
-          const kata = kataSnap.val();
-          kata.uid = key;
-          kata.jakukantes = await this.getJakukanteForKata(key);
-          result.push(kata);
+          await kataRef.on('value', async (kataSnap: DataSnapshot) =>{
+            const kata = kataSnap.val();
+            kata.uid = key;
+            kata.jakukantes = await this.getJakukanteForKata(key);
+            result.push(kata);
+          });
         }
       }
   });
@@ -65,21 +66,26 @@ export class FirebaseService {
 
 async getJakukanteForKata(uid: string): Promise<Jakukante[]> {
   let result: Jakukante[] = [];
+  let map: Map<String, boolean> = new Map();
   const jakukanteListRef = this.db.ref(`kata-jakukante/${uid}`);
+  
   await jakukanteListRef.on('value', async (snapShot: DataSnapshot) => {
-    let map: Map<String, boolean> = new Map();
+    jakukanteListRef.off();
     map = snapShot.val();
     if(map) {
       for (const key of Object.keys(map)){
         const jakukanteRef = this.db.ref(`jakukante/${key}`);
-        const jakukanteSnap = await jakukanteRef.once('value');
-        const jakukante = jakukanteSnap.val();
-        jakukante.uid = key;
-        result.push(jakukante);
+        await jakukanteRef.on('value', async (jakukanteSnap: DataSnapshot) =>{
+          const jakukante = jakukanteSnap.val();
+          jakukante.uid = key;
+          result.push(jakukante);
+        });
       }
   }
   });
+  console.log(result);
   return result;
+  
 }
 
   async saveKata(kata: Kata, iaidoka?: Iaidoka) {
@@ -133,10 +139,10 @@ async getJakukanteForKata(uid: string): Promise<Jakukante[]> {
       const key = jakukanteSnap.getKey();
       const kataJakukanteRef = this.db.ref(`kata-jakukante/${kata?.uid}/${key}`).push();
       this.db.ref(`kata-jakukante/${kata?.uid}/`).child(key).set(true);
-      return jakukanteSnap.value;
+      return key;
     } else {
     const jakukanteRef = this.db.ref(`jakukante/${jakukante.uid}`);
-    return await jakukanteRef.update(jakukante);
+    return await jakukanteRef.update(jakukante).getKey();
     }
   }
 
