@@ -53,6 +53,7 @@ export class FirebaseService {
         for (const key of Object.keys(map)){
           const kataRef = this.db.ref(`kata/${key}`);
           await kataRef.on('value', async (kataSnap: DataSnapshot) =>{
+            kataRef.off();
             const kata = kataSnap.val();
             kata.uid = key;
             kata.jakukantes = await this.getJakukanteForKata(key);
@@ -83,7 +84,6 @@ async getJakukanteForKata(uid: string): Promise<Jakukante[]> {
       }
   }
   });
-  console.log(result);
   return result;
   
 }
