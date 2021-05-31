@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Iaidoka } from 'src/app/shared/models/Iaidoka';
 import { Jakukante } from 'src/app/shared/models/Jakukante';
 import { Kata } from 'src/app/shared/models/Kata';
 import { Technic } from 'src/app/shared/models/Technic';
@@ -19,6 +20,8 @@ export class KataComponent implements OnInit {
   kata?: Kata;
   jakukantes: Jakukante[] = [];
   technics: Technic[] = [];
+  iaidoka?: Iaidoka;
+  clickButton = false;
 
   constructor(
     private firebaseService: FirebaseService,
@@ -27,7 +30,8 @@ export class KataComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.katas = await this.firebaseService.getAllKatasForUser(this.authService.iaidoka?.uid);
+    this.iaidoka = this.authService.iaidoka;
+    this.katas = await this.firebaseService.getAllKatasForUser(this.iaidoka?.uid);
   }
 
   onPlusKataClicked(){
@@ -39,7 +43,7 @@ export class KataComponent implements OnInit {
     dialogRef.afterClosed().subscribe(async result => {
       if(result){
         this.kata = result; 
-        await this.firebaseService.saveKata(this.kata!, this.authService.iaidoka!);
+        await this.firebaseService.saveKata(this.kata!, this.iaidoka!);
       }
     });
   }
@@ -63,11 +67,23 @@ export class KataComponent implements OnInit {
     });
   }
 
+  onEditJakukanteClicked(jakukante: Jakukante){
+    this.clickButton = true;
+    console.log(jakukante, "clicked");
+  }
+
+  onNewTechnicClicked(){
+    
+  }
+
   TrackByJakukanteUid(index: number, jakukante: Jakukante){
     return jakukante.uid;
   }
 
   TrackByKataUid(index: number, kata: Kata){
     return kata.uid;
+  }
+  TrackByTechnicUid(index: number, technic: Technic){
+    return technic.uid;
   }
 }
