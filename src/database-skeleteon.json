@@ -24,12 +24,12 @@
         "name": "",
         "description": ""
     },
-    "jakukante-technical":{
+    "jakukante-kihon":{
         "jakukante-uid":{
-            "technical-uid": true
+            "kihon-uid": true
         }
     },
-    "technical": {
+    "kihon": {
         "description": ""
     },
     "kata-media": {
@@ -52,9 +52,9 @@
         }
     },
     
-    "keiko-jakukante":{
+    "keiko-kihon":{
         "keiko-uid":{
-            "jakukante-uid": true
+            "kihon-uid": true
         }
     },
     "iaidoka-keiko":{

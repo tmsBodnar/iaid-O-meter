@@ -1,22 +1,36 @@
 <h1 mat-dialog-title>{{dialogHeader}}</h1>
 <div mat-dialog-content>
     <form [formGroup]="kataForm">
-        <mat-form-field>
+        <mat-form-field class="form-field-style">
             <mat-label>Name:</mat-label>
             <input  matInput formControlName="name">
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field class="form-field-style">
             <mat-label>Description:</mat-label>
             <textarea  matInput  cdkTextareaAutosize  formControlName="description"></textarea>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field class="form-field-style">
             <mat-label>Number:</mat-label>
             <input matInput formControlName="number">
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field class="form-field-style">
             <mat-label>Ryuha:</mat-label>
             <input matInput formControlName="ryuha">
         </mat-form-field>
+        <div class="flex-title">
+            <label>Jakukantes</label>
+            <button mat-icon-button color='primary' style="margin-left: auto;" (click)="onNewJakukanteClicked()">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+        <mat-selection-list #jakukanteList [multiple]=false>
+            <mat-list-option  *ngFor="let jakukante of kata?.jakukantes">
+                <span> {{jakukante.short}}</span>
+                <button mat-icon-button color='primary' style="margin-left: auto;" (click)="onEditJakukanteClicked(jakukante)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </mat-list-option>
+        </mat-selection-list>
     </form>
 </div>
 <div mat-dialog-actions>

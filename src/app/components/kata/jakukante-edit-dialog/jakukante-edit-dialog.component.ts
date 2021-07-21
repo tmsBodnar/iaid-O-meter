@@ -17,7 +17,7 @@ export class JakukanteEditDialogComponent implements OnInit {
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA,) public jakukante: Jakukante) {
       this.jakukanteForm = this.fb.group({
-        'name': [this.jakukante?.name, Validators.required],
+        'short': [this.jakukante?.short, Validators.required],
         'description': [this.jakukante?.description, Validators.required]
       });
   
@@ -27,7 +27,7 @@ export class JakukanteEditDialogComponent implements OnInit {
 
   onSaveClicked(){
     this.jakukante = {
-      name: this.jakukanteForm.controls['name'].value,
+      short: this.jakukanteForm.controls['short'].value,
       description : this.jakukanteForm.controls['description'].value,
       technics: []
     }

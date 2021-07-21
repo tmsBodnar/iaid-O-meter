@@ -25,35 +25,27 @@
                 <p>
                   {{kata.description}}
                 </p>
-                <mat-expansion-panel>
+                <mat-expansion-panel style="width: 40%; float: left;">
                   <mat-expansion-panel-header>
                     <mat-panel-title>
-                      Jakukantes:
+                      Jakukante:
                     </mat-panel-title>
                   </mat-expansion-panel-header>
-                      <mat-expansion-panel hideToggle [disabled]="clickButton" (click)="clickButton=false"
-                        *ngFor="let jakukante of kata.jakukantes; let i = index; trackBy: TrackByJakukanteUid">
-                        <mat-expansion-panel-header>
-                          <mat-panel-description>
-                            {{jakukante.name}}
-                          </mat-panel-description>
-                          <button mat-icon-button color='primary' style="margin-left: auto;" (click)="onEditJakukanteClicked(jakukante)">
-                            <mat-icon>edit</mat-icon>
-                          </button>
-                        </mat-expansion-panel-header>
-                        <p>
-                          {{jakukante.description}}
-                        </p>
-                        <div class="flex-title">
-                          Technics:
-                          <button mat-icon-button color='primary' style="margin-left: auto;" (click)="onNewTechnicClicked()">
-                            <mat-icon>add</mat-icon>
-                          </button>
-                        </div>
-                        <mat-list *ngFor="let technic of jakukante.technics; let i = index; trackBy: TrackByTechnicUid">
-                          <mat-list-item>{{technic.description}}</mat-list-item>
-                        </mat-list>
-                      </mat-expansion-panel>
+                  <mat-selection-list #jakukantes [multiple]=false [disabled]="clickButton" (click)="clickButton=false">
+                      <mat-list-option  *ngFor="let jakukante of kata.jakukantes; let i = index; trackBy: TrackByJakukanteUid">
+                        {{jakukante.short}}
+                      </mat-list-option>
+                   </mat-selection-list>
+                </mat-expansion-panel>
+                <mat-expansion-panel style="width: 40%; float: right;">
+                   <mat-expansion-panel-header>
+                     <mat-panel-title>
+                      Kihon:
+                     </mat-panel-title>
+                   </mat-expansion-panel-header>
+                      <mat-list #kihons *ngFor="let kihon of kata.kihons; let i = index; trackBy: TrackByKihonUid">
+                          <mat-list-item>{{kihon.description}}</mat-list-item>
+                      </mat-list>
                 </mat-expansion-panel>
               </mat-card-content>
             </mat-card>    

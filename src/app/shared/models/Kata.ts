@@ -1,6 +1,6 @@
 import { Jakukante } from "./Jakukante";
 import { Media } from "./Media";
-import { Technic } from "./Technic";
+import { Kihon } from "./Kihon";
 
 export interface Kata {
     uid?: string;
@@ -10,4 +10,5 @@ export interface Kata {
     medias: Media[];
     jakukantes: Jakukante[];
     ryuha: String;
+    kihons: Kihon[];
 }

@@ -88,16 +88,18 @@ async getJakukanteForKata(uid: string): Promise<Jakukante[]> {
   
 }
 
-  async saveKata(kata: Kata, iaidoka?: Iaidoka) {
+  async saveKata(kata: Kata, iaidoka: Iaidoka, jakukantes: Jakukante[]) {
     if (!kata.uid) {
       const kataRef = this.db.ref(`kata/`);
       const kataSnap = await kataRef.push(kata);
       const key = kataSnap.getKey();
       const iaidokaKataRef = this.db.ref(`iaidoka-kata/${iaidoka?.uid}/${key}`).push();
       this.db.ref(`iaidoka-kata/${iaidoka?.uid}/`).child(key).set(true);
+      this.saveJakukante(jakukantes, kata);
       return kataSnap.value;
     } else {
     const kataRef = this.db.ref(`kata/${kata.uid}`);
+    this.saveJakukante(jakukantes, kata);
     return await kataRef.update(kata);
     }
   }
@@ -131,19 +133,21 @@ async getJakukanteForKata(uid: string): Promise<Jakukante[]> {
     return await keikoRef.update(keiko);
     }
   }
-  async saveJakukante(jakukante: Jakukante, kata: Kata) {
-    console.log(jakukante, kata);
-    if (!jakukante.uid) {
-      const jakukanteRef = this.db.ref(`jakukante/`);
-      const jakukanteSnap = await jakukanteRef.push(jakukante);
-      const key = jakukanteSnap.getKey();
-      const kataJakukanteRef = this.db.ref(`kata-jakukante/${kata?.uid}/${key}`).push();
-      this.db.ref(`kata-jakukante/${kata?.uid}/`).child(key).set(true);
-      return key;
-    } else {
-    const jakukanteRef = this.db.ref(`jakukante/${jakukante.uid}`);
-    return await jakukanteRef.update(jakukante).getKey();
-    }
+  async saveJakukante(jakukantes: Jakukante[], kata: Kata) {
+    jakukantes.forEach(async jakukante => {
+      console.log(jakukante, kata);
+      if (!jakukante.uid) {
+        const jakukanteRef = this.db.ref(`jakukante/`);
+        const jakukanteSnap = await jakukanteRef.push(jakukante);
+        const key = jakukanteSnap.getKey();
+        const kataJakukanteRef = this.db.ref(`kata-jakukante/${kata?.uid}/${key}`).push();
+        this.db.ref(`kata-jakukante/${kata?.uid}/`).child(key).set(true);
+        return key;
+      } else {
+      const jakukanteRef = this.db.ref(`jakukante/${jakukante.uid}`);
+      return await jakukanteRef.update(jakukante).getKey();
+      }
+    });
   }
 
 

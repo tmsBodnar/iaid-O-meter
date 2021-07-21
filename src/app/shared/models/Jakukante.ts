@@ -1,9 +1,9 @@
 import { Kata } from "./Kata";
-import { Technic } from "./Technic";
+import { Kihon } from "./Kihon";
 
 export interface Jakukante {
     uid?:string;
-    name: string;
+    short: string;
     description: String;
-    technics: Technic[];
+    technics: Kihon[];
 }

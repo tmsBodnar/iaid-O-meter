@@ -1,7 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Jakukante } from 'src/app/shared/models/Jakukante';
 import { Kata } from 'src/app/shared/models/Kata';
+import { JakukanteEditDialogComponent } from '../jakukante-edit-dialog/jakukante-edit-dialog.component';
 
 @Component({
   selector: 'app-kata-edit-dialog',
@@ -16,6 +18,7 @@ export class KataEditDialogComponent implements OnInit {
 
   constructor( 
     public dialogRef: MatDialogRef<KataEditDialogComponent>,
+    public dialog: MatDialog,
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA,) public kata?: Kata) {
       this.kataForm = this.fb.group({
@@ -48,6 +51,7 @@ export class KataEditDialogComponent implements OnInit {
         ryuha: this.kataForm.controls['ryuha'].value,
         medias: [],
         jakukantes: [],
+        kihons: [],
       }
     }
     this.dialogRef.close(this.selectedKata);
@@ -55,6 +59,29 @@ export class KataEditDialogComponent implements OnInit {
 
   onCancelClick(){
     this.dialogRef.close();
+  }
+
+  onNewJakukanteClicked(){
+    this.openJakukanteEditDialog(null)
+  }
+
+  onEditJakukanteClicked(jakukante: Jakukante){
+    this.openJakukanteEditDialog(jakukante);
+    
+  }
+  private openJakukanteEditDialog(jakukante: Jakukante | null){
+    const dialogRef = this.dialog.open(JakukanteEditDialogComponent, {
+      width: '400px',
+      data: jakukante
+    });
+
+    dialogRef.afterClosed().subscribe(async result => {
+      if(result){
+      //  const savedJakukanteUid = await this.firebaseService.saveJakukante(result, this.kata!);
+      //  result.uid = savedJakukanteUid
+        this.selectedKata?.jakukantes.push(result);
+      }
+    });
   }
 
 }
