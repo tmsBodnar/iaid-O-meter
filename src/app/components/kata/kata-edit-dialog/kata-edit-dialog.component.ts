@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { Jakukante } from 'src/app/shared/models/Jakukante';
 import { Kata } from 'src/app/shared/models/Kata';
 import { JakukanteEditDialogComponent } from '../jakukante-edit-dialog/jakukante-edit-dialog.component';
@@ -57,8 +58,27 @@ export class KataEditDialogComponent implements OnInit {
     this.dialogRef.close(this.selectedKata);
   }
 
-  onCancelClick(){
+  onCancelClicked(){
     this.dialogRef.close();
+  }
+
+  onDeleteClicked(){
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: this.selectedKata?.name
+    });
+    dialogRef.afterClosed().subscribe(async result => {
+      console.log("1", result);
+      if(!result){
+        console.log(result);
+        this.dialogRef.close();
+      }
+      else {
+        console.log(result);
+        this.selectedKata = undefined;
+        this.dialogRef.close(this.selectedKata);
+      }
+    });
   }
 
   onNewJakukanteClicked(){
@@ -77,8 +97,6 @@ export class KataEditDialogComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(async result => {
       if(result){
-      //  const savedJakukanteUid = await this.firebaseService.saveJakukante(result, this.kata!);
-      //  result.uid = savedJakukanteUid
         this.selectedKata?.jakukantes.push(result);
       }
     });

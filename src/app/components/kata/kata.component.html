@@ -7,18 +7,19 @@
                 
               </mat-panel-title>
               <mat-panel-description>
-                {{kata.number}} / {{kata.ryuha}}
+                <div class="flex-title">
+                  {{kata.number}} / {{kata.ryuha}}
+                  <button mat-icon-button color='primary' style="margin-left: auto;" (click)="onEditKataClicked(kata)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                </div>
+              
               </mat-panel-description>
             </mat-expansion-panel-header>    
             <mat-card>
               <mat-card-header>
                 <mat-card-title>
-                  <div class="flex-title">
-                  {{kata.name}}
-                    <button mat-icon-button color='primary' style="margin-left: auto;" (click)="onEditKataClicked(kata)">
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                  </div>
+                  
                 </mat-card-title>
               </mat-card-header>
               <mat-card-content>

@@ -5,6 +5,7 @@ import { Iaidoka } from '../../models/Iaidoka';
 import { Jakukante } from '../../models/Jakukante';
 import { Kata } from '../../models/Kata';
 import { Keiko } from '../../models/Keiko';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -62,6 +63,7 @@ export class FirebaseService {
         }
       }
   });
+  console.log(result);
   return result;
 }
 
@@ -102,6 +104,15 @@ async getJakukanteForKata(uid: string): Promise<Jakukante[]> {
     this.saveJakukante(jakukantes, kata);
     return await kataRef.update(kata);
     }
+  }
+
+  async deleteKata(kata: Kata, iaidoka: Iaidoka){
+    const kataRefToDelete = this.db.ref(`kata/${kata?.uid}`);
+    await kataRefToDelete.remove();
+    const jakukanteOfKataRef = this.db.ref(`kata-jakukante/`).child(kata.uid);
+    await jakukanteOfKataRef.remove();
+    const kataOfIaidokaRef = this.db.ref(`iaidoka-kata/`).child(iaidoka.uid).child(kata.uid);
+    await kataOfIaidokaRef.remove();
   }
 
   async getAllKeikoForIaidoka(uid?: number) : Promise<Keiko[]> {

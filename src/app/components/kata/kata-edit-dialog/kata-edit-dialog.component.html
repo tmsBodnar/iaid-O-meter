@@ -34,6 +34,7 @@
     </form>
 </div>
 <div mat-dialog-actions>
-    <button mat-button (click)="onSaveClicked()" cdkFocusInitial [disabled]="kataForm.invalid">Ok</button>
-    <button mat-button (click)="onCancelClick()">Cancel</button>
+    <button mat-button (click)="onSaveClicked()" color="green" cdkFocusInitial [disabled]="kataForm.invalid">Ok</button>
+    <button mat-button (click)="onCancelClicked()">Cancel</button>
+    <button mat-button (click)="onDeleteClicked()" style="float:right" color="warn">Delete {{selectedKata?.name}}</button>
 </div>

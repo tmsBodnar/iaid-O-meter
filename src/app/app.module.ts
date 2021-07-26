@@ -18,12 +18,14 @@ import { UserinfoModule } from './components/userinfo/userinfo.module';
 import { OverallModule } from './components/overall/overall.module';
 import { MatNativeDateModule } from '@angular/material/core';
 import { KataModule } from './components/kata/kata.module';
+import { ConfirmDialogComponent } from './shared/components/confirm-dialog/confirm-dialog.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ComponentContainerDirective,
+    ConfirmDialogComponent,
   ],
   imports: [
     DashboardModule,

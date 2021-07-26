@@ -6,7 +6,6 @@ import { Kata } from 'src/app/shared/models/Kata';
 import { Kihon } from 'src/app/shared/models/Kihon';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { FirebaseService } from 'src/app/shared/services/firebase/firebase.service';
-import { JakukanteEditDialogComponent } from './jakukante-edit-dialog/jakukante-edit-dialog.component';
 import { KataEditDialogComponent } from './kata-edit-dialog/kata-edit-dialog.component';
 
 @Component({
@@ -46,12 +45,14 @@ export class KataComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(async result => {
-      if(result){
+      if(result != undefined){
         this.kata = result; 
         const jakukantes = this.kata!.jakukantes;
         this.kata!.jakukantes = [];
         await this.firebaseService.saveKata(this.kata!, this.iaidoka!, jakukantes);
         this.kata!.jakukantes = await this.firebaseService.getJakukanteForKata(this.kata!.uid!);
+      } else if (result === undefined) {
+        await this.firebaseService.deleteKata(this.kata!, this.iaidoka!);
       }
     });
   }
