@@ -131,8 +131,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       } else {
         this.menuitems?.selectedOptions.toggle(this.selectedComponent);
         this.selectedItem = this.selectedComponent;
+
         this.navigateBySelected(this.selectedComponent);
       }
     });
   } 
 }
+
