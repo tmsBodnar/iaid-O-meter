@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+.main-wrapper {
+    width: 30vw;
+    margin: auto;
+    min-width: 270px;
+    padding-top: 1em;
+}
+
+.form-input {
+    margin: 1em;
+    min-width: 90%
+}

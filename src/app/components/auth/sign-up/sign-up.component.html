@@ -1,0 +1,45 @@
+<div class="main-wrapper">
+  <form [formGroup]="signupForm" style="margin-top: 10em;" (submit)="onSubmitForm()">
+    <mat-form-field  appearance="fill" class="form-input">
+      <mat-label>
+        Name
+      </mat-label>
+      <input type="text" matInput #name formControlName="name" placeholder="John Doe">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="form-input">
+      <mat-label>
+        Email
+      </mat-label>
+      <input type="email" matInput #emailAddr formControlName="email" placeholder="Ex. pat@example.com">
+      <mat-error *ngIf="signupForm.hasError('email') && !signupForm.hasError('required')">
+          Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="signupForm.hasError('required')">
+         Email is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="form-input">
+      <mat-label>
+        Enter your password
+      </mat-label>
+      <input #userPassword formControlName="password" matInput [type]="hide ? 'password' : 'text'">
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>
+          {{hide ? 'visibility_off' : 'visibility'}}
+        </mat-icon>
+      </button>
+    </mat-form-field>
+    <div class="loginbtn centered-text">   
+      <button mat-raised-button color="primary" [disabled]="signupForm.invalid" type="submit">
+        Register account
+      </button>
+    </div>
+  </form>
+  <div class="form-input" style="margin-top: 2em;">
+    <div class="centered-text">
+      <span><a routerLink="/login">Back to Login</a></span>
+    </div>
+  </div>
+  </div>

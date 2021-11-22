@@ -1,0 +1,13 @@
+
+.mat-raised-button{
+    min-width: 230px !important;
+}
+.centered-text {
+    text-align: center;
+}
+:host::ng-deep a {
+    color: #673ab7 !important;
+}
+.loginbtn{
+    margin: 1em;
+}

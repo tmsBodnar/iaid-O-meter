@@ -1,0 +1,29 @@
+<!-- Top navigation -->
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="drawer.toggle()">
+   <mat-icon>menu</mat-icon>
+  </button>
+  <span>iaid-O-meter</span>
+  <span class="spacer"></span>
+  <button mat-icon-button (click)="onAccountClicked()" style="float: right;">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+ 
+</mat-toolbar>
+<mat-drawer-container class="sidenav-container" hasBackdrop="true" (backDropClick)="drawer.toggle()" autosize>
+  <mat-drawer #drawer class="sidenav-drawer" mode="over" >
+    <mat-selection-list #menuitems [multiple]="false" (selectionChange)="onMenuitemClicked($event)"
+     (click)="drawer.toggle()" >
+      <mat-list-option *ngFor="let option of options" [value]="option">{{option}}</mat-list-option>
+    </mat-selection-list>
+  </mat-drawer>
+
+  <div class="sidenav-content">
+    <ng-template #componentcontainer>
+
+    </ng-template>
+  </div>
+</mat-drawer-container>
+
+
+

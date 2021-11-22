@@ -1,0 +1,4 @@
+
+:host::ng-deep .event-style .mat-calendar-body-cell-content {
+    border-color: #673ab7 !important;
+}

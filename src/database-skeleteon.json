@@ -1,0 +1,65 @@
+{
+    "Iaidoka":{
+        "uid": 1,
+        "name": "",
+        "email": ""
+    },
+    "iaidoka-kata":{
+        "iaidoka-uid":{
+            "kata-uid": true
+        }
+    },
+    "kata": {
+        "name": "",
+        "description": "",
+        "number": "",
+        "ryuha": ""
+    },
+    "kata-jakukante":{
+        "kata-uid": {
+            "jakukante-uid": true
+        }
+    },
+    "jakukante": {
+        "name": "",
+        "description": ""
+    },
+    "jakukante-kihon":{
+        "jakukante-uid":{
+            "kihon-uid": true
+        }
+    },
+    "kihon": {
+        "description": ""
+    },
+    "kata-media": {
+        "kata-uid":{
+            "media-uid": true
+        }
+    },
+    "media": {
+        "name": "",
+        "path": "",
+        "isPicture": true
+    },
+    "keiko": {
+        "start": "",
+        "stop": ""
+    },
+    "keiko-kata":{
+        "keiko-uid":{
+            "kata-uid": true
+        }
+    },
+    
+    "keiko-kihon":{
+        "keiko-uid":{
+            "kihon-uid": true
+        }
+    },
+    "iaidoka-keiko":{
+        "iaidoka-uid":{
+            "keiko-uid":true
+        }
+    }
+}

@@ -1,0 +1,37 @@
+<div class="main-wrapper">
+    <form [formGroup]="userForm" (submit)="onFormSubmit()">
+
+        <mat-form-field appearance=fill class="form-input">
+          <mat-label>
+              Name
+            </mat-label>
+            <input matInput #name formControlName="name" >
+            <mat-icon matSuffix>edit</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="form-input">
+            <mat-label>
+              Email
+            </mat-label>
+            <input type="email" matInput #emailAddr formControlName="email">
+            <mat-icon matSuffix>edit</mat-icon>
+            <mat-error *ngIf="userForm.hasError('email') && !userForm.hasError('required')">
+                Please enter a valid email address
+            </mat-error>
+            <mat-error *ngIf="userForm.hasError('required')">
+               Email is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <div class="loginbtn centered-text">  
+            <button mat-raised-button color="primary" [disabled]="userForm.invalid || clicked" type="submit">
+                Save
+            </button>
+        </div>
+    </form>      
+        <div class="loginbtn centered-text">  
+            <button mat-raised-button color="primary"  (click)="onCancelClicked()">
+                    Back
+            </button>
+        </div>    
+</div>
