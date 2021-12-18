@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   @ViewChild("menuitems")
   menuitems?: MatSelectionList;
 
-  options: String[] = ["Home", "Kata", "Logout"];
+  options: String[] = ["Home", "Kata", "User", "Logout"];
 
   selectedItem: any;
   selectedComponent: any;
@@ -69,7 +69,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       if (this.iaidoka) {
         let componentRef = null;
         componentRef = this.loadComponent(OverallComponent);
-        this.selectedComponent = "home";
+        this.selectedComponent = "Home";
       }else {
         this.router.navigate(['/login']);
         window.alert('Please login first');
@@ -81,18 +81,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.selectedItem = event.options[0].value;
     console.log(this.selectedItem);
     this.navigateBySelected(this.selectedItem);
-  }
-
-  onAccountClicked(){
-    let componentRef = null;
-    componentRef = this.loadComponent(UserinfoComponent);
-    componentRef.instance.iaidoka = this.iaidoka;      
-    componentRef.instance.cancel.subscribe( (c: boolean) => {
-      if (c) {
-        this.selectedItem = this.selectedComponent;
-        this.navigateBySelected(this.selectedComponent);
-      }
-    });
   }
   
   navigateBySelected(selectedItem: any) {
@@ -110,6 +98,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         this.selectedComponent = selectedItem;
         componentRef = this.loadComponent(KataComponent);
         break;
+      case "User":
+        this.selectedComponent = selectedItem;
+        componentRef = this.loadComponent(UserinfoComponent);
+        componentRef.instance.iaidoka = this.iaidoka;      
     }
   }
   
@@ -131,7 +123,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       } else {
         this.menuitems?.selectedOptions.toggle(this.selectedComponent);
         this.selectedItem = this.selectedComponent;
-
         this.navigateBySelected(this.selectedComponent);
       }
     });

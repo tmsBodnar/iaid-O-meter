@@ -53,11 +53,5 @@ export class UserinfoComponent implements OnInit, Generalcomponent{
     this.iaidoka!.email = email
     this.clicked = true;
     await this.firebaseService.updateIaidoka(this.iaidoka!);
-    this.onCancelClicked();
   }
-
-  onCancelClicked(){
-    this.cancel.next(true);
-  }
-
 }
