@@ -33,26 +33,28 @@ export class KataComponent implements OnInit {
   async ngOnInit() {
     this.iaidoka = this.authService.iaidoka;
     this.katas = await this.firebaseService.getAllKatasForUser(this.iaidoka?.uid);
-    await this.katas.forEach(async kata => {
-      kata.jakukantes = await this.firebaseService.getJakukanteForKata(kata.uid!);
-    });
   }
 
   onPlusKataClicked(){
+    console.log(this.katas);
     const dialogRef = this.dialog.open(KataEditDialogComponent, {
       width: '500px',
       data: this.kata
     });
 
     dialogRef.afterClosed().subscribe(async result => {
+      console.log("2",this.katas);
       if(result != undefined){
         this.kata = result; 
         const jakukantes = this.kata!.jakukantes;
         this.kata!.jakukantes = [];
         await this.firebaseService.saveKata(this.kata!, this.iaidoka!, jakukantes);
         this.kata!.jakukantes = await this.firebaseService.getJakukanteForKata(this.kata!.uid!);
+        console.log("3",this.katas);
       } else if (result === undefined) {
         await this.firebaseService.deleteKata(this.kata!, this.iaidoka!);
+      } else {
+
       }
     });
   }

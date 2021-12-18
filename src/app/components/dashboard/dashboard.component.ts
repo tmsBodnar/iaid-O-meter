@@ -79,13 +79,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   onMenuitemClicked(event: MatSelectionListChange){
     this.selectedItem = event.options[0].value;
-    console.log(this.selectedItem);
     this.navigateBySelected(this.selectedItem);
   }
   
   navigateBySelected(selectedItem: any) {
     let componentRef = null;
-    console.log(selectedItem);
     switch (selectedItem) {
       case "Logout":
         this.confirmLogout();
