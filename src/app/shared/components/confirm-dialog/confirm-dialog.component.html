@@ -1,3 +1,9 @@
-Are you sure?
-<button mat-raised-button (click)="onOkClicked()" cdkFocusInitial>Ok</button>
-<button mat-raised-button (click)="onCancelClicked()" matDialogClose>Cancel</button>
+<div>
+    Are you sure?
+    <button mat-icon-button (click)="onOkClicked()" cdkFocusInitial>
+        <mat-icon>check</mat-icon>
+    </button>
+    <button mat-icon-button (click)="onCancelClicked()" matDialogClose>
+        <mat-icon>close</mat-icon>
+    </button>
+</div>

@@ -5,22 +5,22 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatCheckboxModule } from '@angular/material/checkbox'
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
-
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
     SignInComponent,
     SignUpComponent,
-    VerifyEmailComponent, 
-    ForgotPasswordComponent, 
-    ErrorPageComponent
+    VerifyEmailComponent,
+    ForgotPasswordComponent,
+    ErrorPageComponent,
   ],
   imports: [
     CommonModule,
@@ -31,7 +31,8 @@ import { ErrorPageComponent } from './error-page/error-page.component';
     MatIconModule,
     MatCheckboxModule,
     MatButtonModule,
-    MatSnackBarModule
-  ]
+    MatSnackBarModule,
+    RouterModule,
+  ],
 })
-export class AuthModule { }
+export class AuthModule {}

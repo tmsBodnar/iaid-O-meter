@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AngularFireModule } from "@angular/fire";
-import { AngularFireAuthModule } from "@angular/fire/auth";
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
 import { AuthService } from './shared/services/auth/auth.service';
@@ -19,7 +19,8 @@ import { OverallModule } from './components/overall/overall.module';
 import { MatNativeDateModule } from '@angular/material/core';
 import { KataModule } from './components/kata/kata.module';
 import { ConfirmDialogComponent } from './shared/components/confirm-dialog/confirm-dialog.component';
-
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -41,12 +42,11 @@ import { ConfirmDialogComponent } from './shared/components/confirm-dialog/confi
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    MatIconModule,
   ],
-  providers: [
-    AuthService, 
-    BusyService
-  ],
-  bootstrap: [AppComponent]
+  providers: [AuthService, BusyService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
