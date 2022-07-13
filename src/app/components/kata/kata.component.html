@@ -1,18 +1,19 @@
 <div class="kata-wrapper">
   <div>
-    <mat-expansion-panel *ngFor="let ryuha of ryuhas; let i = index; trackBy: TrackByRyuhaUid">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{ ryuha.name }}
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <mat-selection-list #katas [multiple]="false" [(ngModel)]="selectedKatas"
-        (ngModelChange)="selectedKataChanged($event)">
-        <mat-list-option *ngFor="let kata of ryuha.katas" [value]="kata">
-          {{ kata.name }}
-        </mat-list-option>
-      </mat-selection-list>
-    </mat-expansion-panel>
+    <mat-accordion [multi]="false">
+      <mat-expansion-panel *ngFor="let ryuha of ryuhas; let i = index" (opened)="setSelectedRyuha(i)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ ryuha.name }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-selection-list #katas [multiple]="false" [(ngModel)]="selectedKatas" (click)="selectedKataChanged($event)">
+          <mat-list-option *ngFor="let kata of ryuha.katas" [value]="kata">
+            {{ kata.name }}
+          </mat-list-option>
+        </mat-selection-list>
+      </mat-expansion-panel>
+    </mat-accordion>
   </div>
 
   <div class="new-btn">

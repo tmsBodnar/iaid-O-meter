@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { KataEditDialogComponent } from './kata-edit-dialog.component';
+import { KataDetailsComponent } from './kata-details.component';
 
-describe('KataEditDialogComponent', () => {
-  let component: KataEditDialogComponent;
-  let fixture: ComponentFixture<KataEditDialogComponent>;
+describe('KataDetailsComponent', () => {
+  let component: KataDetailsComponent;
+  let fixture: ComponentFixture<KataDetailsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ KataEditDialogComponent ]
+      declarations: [ KataDetailsComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(KataEditDialogComponent);
+    fixture = TestBed.createComponent(KataDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -11,19 +11,18 @@ import { Kata } from 'src/app/shared/models/Kata';
 import { Ryuha } from 'src/app/shared/models/Ryuha';
 
 @Component({
-  selector: 'app-kata-edit-dialog',
-  templateUrl: './kata-edit-dialog.component.html',
-  styleUrls: ['./kata-edit-dialog.component.css'],
+  selector: 'app-new-kata-dialog',
+  templateUrl: './new-kata-dialog.component.html',
+  styleUrls: ['./new-kata-dialog.component.css'],
 })
-export class KataEditDialogComponent implements OnInit {
+export class NewKataDialogComponent implements OnInit {
   dialogHeader = 'Add new Kata';
   kataForm: FormGroup;
   ryuhas: Ryuha[] = [];
   kata?: Kata;
 
   constructor(
-    public dialogRef: MatDialogRef<KataEditDialogComponent>,
-    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<NewKataDialogComponent>,
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public ryuhasData: Ryuha[]
   ) {

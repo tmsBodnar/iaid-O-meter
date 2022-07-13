@@ -5,8 +5,9 @@ import { Note } from 'src/app/shared/models/Note';
 import { Kata } from 'src/app/shared/models/Kata';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { FirebaseService } from 'src/app/shared/services/firebase/firebase.service';
-import { KataEditDialogComponent } from './kata-edit-dialog/kata-edit-dialog.component';
+import { NewKataDialogComponent } from './new-kata-dialog/new-kata-dialog.component';
 import { Ryuha } from 'src/app/shared/models/Ryuha';
+import { KataDetailsComponent } from './kata-details/kata-details.component';
 
 @Component({
   selector: 'app-kata',
@@ -21,6 +22,7 @@ export class KataComponent implements OnInit {
   iaidoka?: Iaidoka;
   clickButton = false;
   selectedKatas: Kata[] = [];
+  selectedRyuha?: Ryuha;
 
   constructor(
     private firebaseService: FirebaseService,
@@ -46,7 +48,7 @@ export class KataComponent implements OnInit {
   }
 
   onPlusKataClicked() {
-    const dialogRef = this.dialog.open(KataEditDialogComponent, {
+    const dialogRef = this.dialog.open(NewKataDialogComponent, {
       width: '500px',
       data: this.ryuhas,
     });
@@ -64,11 +66,22 @@ export class KataComponent implements OnInit {
       this.updateDatas();
     });
   }
-  TrackByRyuhaUid(index: number, ryuha: Ryuha) {
-    return ryuha.uid;
-  }
+
   selectedKataChanged(event: any) {
-    console.log(event);
-    console.log(this.selectedKatas[0]);
+    const dialogRef = this.dialog.open(KataDetailsComponent, {
+      data: {
+        selectedKata: this.selectedKatas[0],
+        ryuhasData: this.ryuhas,
+        selectedRyuha: this.selectedRyuha,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log(result);
+      }
+    });
+  }
+  setSelectedRyuha(index: number) {
+    this.selectedRyuha = this.ryuhas[index];
   }
 }
