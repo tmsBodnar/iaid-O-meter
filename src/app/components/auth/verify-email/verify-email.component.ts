@@ -6,31 +6,25 @@ import { AuthService } from '../../../shared/services/auth/auth.service';
 @Component({
   selector: 'app-verify-email',
   templateUrl: './verify-email.component.html',
-  styleUrls: ['./verify-email.component.css']
+  styleUrls: ['./verify-email.component.css'],
 })
 export class VerifyEmailComponent implements OnInit {
-
   user: User;
   resent = false;
 
-  constructor(
-    public authService: AuthService,
-    private snackBar: MatSnackBar
-  ) {
+  constructor(public authService: AuthService, private snackBar: MatSnackBar) {
     this.user = this.authService.userData;
-   }
-
-  ngOnInit(): void {
   }
 
-  async onResendClicked(){
+  ngOnInit(): void {}
+
+  async onResendClicked() {
     try {
       await this.authService.SendVerificationMail();
       this.resent = true;
       this.snackBar.open('Verification email sent');
-    } catch (error) {
+    } catch (error: any) {
       this.snackBar.open(error.message);
     }
   }
-
 }

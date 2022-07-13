@@ -1,62 +1,24 @@
 <div class="kata-wrapper">
-    <div>
-        <mat-expansion-panel *ngFor="let kata of katas; let i = index; trackBy: TrackByKataUid">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                {{kata.name}}
-                
-              </mat-panel-title>
-              <mat-panel-description>
-                <div class="flex-title">
-                  {{kata.number}} / {{kata.ryuha}}
-                  <button mat-icon-button color='primary' style="margin-left: auto;" (click)="onEditKataClicked(kata)">
-                    <mat-icon>edit</mat-icon>
-                  </button>
-                </div>
-              
-              </mat-panel-description>
-            </mat-expansion-panel-header>    
-            <mat-card>
-              <mat-card-header>
-                <mat-card-title>
-                  
-                </mat-card-title>
-              </mat-card-header>
-              <mat-card-content>
-                <p>
-                  {{kata.description}}
-                </p>
-                <mat-expansion-panel style="width: 40%; float: left;">
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>
-                      Jakukante:
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <mat-selection-list #jakukantes [multiple]=false [disabled]="clickButton" (click)="clickButton=false">
-                      <mat-list-option  *ngFor="let jakukante of kata.jakukantes; let i = index; trackBy: TrackByJakukanteUid">
-                        {{jakukante.short}}
-                      </mat-list-option>
-                   </mat-selection-list>
-                </mat-expansion-panel>
-                <mat-expansion-panel style="width: 40%; float: right;">
-                   <mat-expansion-panel-header>
-                     <mat-panel-title>
-                      Kihon:
-                     </mat-panel-title>
-                   </mat-expansion-panel-header>
-                      <mat-list #kihons *ngFor="let kihon of kata.kihons; let i = index; trackBy: TrackByKihonUid">
-                          <mat-list-item>{{kihon.description}}</mat-list-item>
-                      </mat-list>
-                </mat-expansion-panel>
-              </mat-card-content>
-            </mat-card>    
-          </mat-expansion-panel>
-    </div>
+  <div>
+    <mat-expansion-panel *ngFor="let ryuha of ryuhas; let i = index; trackBy: TrackByRyuhaUid">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ ryuha.name }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-selection-list #katas [multiple]="false" [(ngModel)]="selectedKatas"
+        (ngModelChange)="selectedKataChanged($event)">
+        <mat-list-option *ngFor="let kata of ryuha.katas" [value]="kata">
+          {{ kata.name }}
+        </mat-list-option>
+      </mat-selection-list>
+    </mat-expansion-panel>
+  </div>
 
-    <div class="new-btn">
-        <button mat-raised-button color='primary' (click)="onPlusKataClicked()">
-            <mat-icon style="margin: 5px;">add_circle</mat-icon>
-            <span>Add new kata</span>
-        </button>
-    </div>
+  <div class="new-btn">
+    <button mat-raised-button color='primary' (click)="onPlusKataClicked()">
+      <mat-icon style="margin: 5px;">add_circle</mat-icon>
+      <span>Add new kata</span>
+    </button>
+  </div>
 </div>

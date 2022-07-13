@@ -1,20 +1,22 @@
 .new-btn {
-    margin-top: 20px;
-    float: right;
-    
+  margin-top: 20px;
+  float: right;
 }
 .kata-wrapper {
-    width: 80%;
-    margin: auto;
-    min-width: 480px;
-    padding-top: 10em;
+  width: 80%;
+  margin: auto;
+  min-width: 350px;
+  padding-top: 10em;
 }
-:host::ng-deep .mat-card-header-text{
-    width: 100% !important;
+:host::ng-deep .mat-card-header-text {
+  width: 100% !important;
 }
-.flex-title{
-    height: 40px;
-    display: flex;
-    width: 100%;
-    align-items: center;
+.flex-title {
+  height: 40px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+:host::ng-deep.mat-expansion-panel-body {
+  padding: 0px 5px 7px !important;
 }

@@ -1,6 +1,5 @@
-
 export interface Iaidoka {
-    uid: number;
-    name: String;
-    email: String;
+  uid: string;
+  name: String;
+  email: String;
 }

@@ -4,23 +4,17 @@ import { KataComponent } from './kata.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { KataEditDialogComponent } from './kata-edit-dialog/kata-edit-dialog.component';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {MatCardModule} from '@angular/material/card';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatListModule} from '@angular/material/list';
-import { JakukanteEditDialogComponent } from './jakukante-edit-dialog/jakukante-edit-dialog.component';
-
-
+import { MatCardModule } from '@angular/material/card';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
-  declarations: [
-    KataComponent,
-    KataEditDialogComponent,
-    JakukanteEditDialogComponent
-  ],
+  declarations: [KataComponent, KataEditDialogComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -32,7 +26,8 @@ import { JakukanteEditDialogComponent } from './jakukante-edit-dialog/jakukante-
     MatInputModule,
     MatCardModule,
     MatExpansionModule,
-    MatListModule
-  ]
+    MatListModule,
+    MatSelectModule,
+  ],
 })
-export class KataModule { }
+export class KataModule {}

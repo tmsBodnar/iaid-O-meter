@@ -8,11 +8,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
-
-
-
+import {
+  MatDialogModule,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -25,11 +25,11 @@ import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog
     MatToolbarModule,
     MatMenuModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
   ],
   providers: [
     { provide: MatDialogRef, useValue: {} },
     { provide: MAT_DIALOG_DATA, useValue: [] },
-  ]
+  ],
 })
-export class DashboardModule { }
+export class DashboardModule {}
