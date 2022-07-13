@@ -24,21 +24,26 @@ export class NewKataDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<NewKataDialogComponent>,
     private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public ryuhasData: Ryuha[]
+    @Inject(MAT_DIALOG_DATA) public data: { ryuhasData: Ryuha[]; kata: Kata }
   ) {
-    this.ryuhas = ryuhasData;
+    this.ryuhas = data.ryuhasData;
+    this.kata = data.kata;
     this.kataForm = this.fb.group({
       name: [this.kata?.name, Validators.required],
       description: [this.kata?.description, Validators.required],
       number: [this.kata?.number, Validators.required],
-      ryuha: [this.kata?.ryuha, Validators.required],
+      ryuha: [
+        this.ryuhas.find((r) => r.name === this.kata?.ryuha.name),
+        Validators.required,
+      ],
     });
   }
 
   ngOnInit(): void {}
 
   onSaveClicked() {
-    this.kata = {
+    const kata = {
+      uid: this.kata?.uid,
       name: this.kataForm.controls['name'].value,
       description: this.kataForm.controls['description'].value,
       number: this.kataForm.controls['number'].value,
@@ -46,7 +51,11 @@ export class NewKataDialogComponent implements OnInit {
       medias: [],
       notes: [],
     };
-    this.dialogRef.close(this.kata);
+    this.dialogRef.close({ kata: kata, delete: false });
+  }
+
+  onRemoveClicked() {
+    this.dialogRef.close({ kata: this.kata, delete: true });
   }
 
   onCancelClicked() {

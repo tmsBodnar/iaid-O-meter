@@ -1,17 +1,24 @@
 <div class="kata-wrapper">
   <div>
     <mat-accordion [multi]="false">
-      <mat-expansion-panel *ngFor="let ryuha of ryuhas; let i = index" (opened)="setSelectedRyuha(i)">
+      <mat-expansion-panel *ngFor="let ryuha of ryuhas; let i = index" (opened)="setSelectedRyuha(i)"
+        [expanded]="indexExpanded == i">
         <mat-expansion-panel-header>
           <mat-panel-title>
             {{ ryuha.name }}
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <mat-selection-list #katas [multiple]="false" [(ngModel)]="selectedKatas" (click)="selectedKataChanged($event)">
-          <mat-list-option *ngFor="let kata of ryuha.katas" [value]="kata">
-            {{ kata.name }}
-          </mat-list-option>
-        </mat-selection-list>
+        <mat-list #katas>
+          <mat-list-item *ngFor="let kata of ryuha.katas" style="display: list-item;">
+            <span>
+              {{ kata.name }}
+              <mat-icon style="float: right; color: dimgray; transform: scale(0.8);" (click)="onKataNotesEdit(kata)">
+                note_add</mat-icon>
+              <mat-icon style="float: right; color: dimgray;transform: scale(0.8); margin-right: 1em;"
+                (click)="onPlusKataClicked(kata)">edit</mat-icon>
+            </span>
+          </mat-list-item>
+        </mat-list>
       </mat-expansion-panel>
     </mat-accordion>
   </div>

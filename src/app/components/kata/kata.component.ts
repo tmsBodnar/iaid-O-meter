@@ -21,14 +21,13 @@ export class KataComponent implements OnInit {
   notes: Note[] = [];
   iaidoka?: Iaidoka;
   clickButton = false;
-  selectedKatas: Kata[] = [];
   selectedRyuha?: Ryuha;
+  indexExpanded = -1;
 
   constructor(
     private firebaseService: FirebaseService,
     private authService: AuthService,
-    public dialog: MatDialog,
-    private ref: ChangeDetectorRef
+    public dialog: MatDialog
   ) {}
 
   async ngOnInit() {
@@ -47,40 +46,42 @@ export class KataComponent implements OnInit {
     }
   }
 
-  onPlusKataClicked() {
+  onPlusKataClicked(kata?: Kata) {
     const dialogRef = this.dialog.open(NewKataDialogComponent, {
       width: '500px',
-      data: this.ryuhas,
+      data: { ryuhasData: this.ryuhas, kata: kata },
     });
 
     dialogRef.afterClosed().subscribe(async (result) => {
       if (result != undefined) {
-        this.kata = result;
-        const notes = this.kata!.notes;
-        this.kata!.notes = [];
-        await this.firebaseService.saveKata(this.kata!, this.iaidoka!, notes);
-        this.kata!.notes = await this.firebaseService.getNotesForKata(
-          this.kata!.uid!
-        );
+        if (result.kata !== undefined) {
+          if (result.delete) {
+            await this.firebaseService.deleteKata(result.kata, this.iaidoka!);
+            this.updateDatas();
+          } else {
+            this.kata = result;
+            const notes = this.kata!.notes;
+            this.kata!.notes = [];
+            await this.firebaseService.saveKata(
+              this.kata!,
+              this.iaidoka!,
+              notes
+            );
+            this.kata!.notes = await this.firebaseService.getNotesForKata(
+              this.kata!.uid!
+            );
+            this.updateDatas();
+            this.selectedRyuha = this.ryuhas.find(
+              (r) => r.name === this.kata?.ryuha.name
+            );
+            this.indexExpanded = this.ryuhas.indexOf(this.selectedRyuha!);
+          }
+        }
       }
-      this.updateDatas();
     });
   }
+  onKataNotesEdit(kata: Kata) {}
 
-  selectedKataChanged(event: any) {
-    const dialogRef = this.dialog.open(KataDetailsComponent, {
-      data: {
-        selectedKata: this.selectedKatas[0],
-        ryuhasData: this.ryuhas,
-        selectedRyuha: this.selectedRyuha,
-      },
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        console.log(result);
-      }
-    });
-  }
   setSelectedRyuha(index: number) {
     this.selectedRyuha = this.ryuhas[index];
   }

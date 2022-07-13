@@ -40,7 +40,6 @@ export class KataDetailsComponent implements OnInit {
     console.log(this.kata, this.ryuhas, this.selectedRyuha);
     this.detailsForm = this.fb.group({
       name: [this.kata?.name, Validators.required],
-      description: [this.kata?.description, Validators.required],
       number: [this.kata?.number, Validators.required],
       ryuhaControl: [this.selectedRyuha, Validators.required],
     });
@@ -51,9 +50,9 @@ export class KataDetailsComponent implements OnInit {
   onSaveClicked() {
     this.kata = {
       name: this.detailsForm.controls['name'].value,
-      description: this.detailsForm.controls['description'].value,
       number: this.detailsForm.controls['number'].value,
       ryuha: this.detailsForm.controls['ryuhaControl'].value,
+      description: this.kata.description,
       medias: [],
       notes: [],
     };

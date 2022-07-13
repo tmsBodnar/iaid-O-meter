@@ -1,32 +1,28 @@
-<div mat-dialog-title>
-    {{ kata.name }}
-</div>
-<div mat-dialog-content>
+<mat-card>
     <form #form [formGroup]="detailsForm">
-        <mat-form-field class="form-field-style">
-            <mat-label>Name:</mat-label>
-            <input matInput formControlName="name" />
-        </mat-form-field>
-        <mat-form-field class="form-field-style">
-            <mat-label>Description:</mat-label>
-            <textarea matInput cdkTextareaAutosize formControlName="description"></textarea>
-        </mat-form-field>
-        <mat-form-field class="form-field-style">
-            <mat-label>Number:</mat-label>
-            <input matInput formControlName="number" />
-        </mat-form-field>
-        <mat-form-field class="form-field-style">
-            <mat-label>Ryuha:</mat-label>
-            <mat-select formControlName="ryuhaControl">
-                <mat-option *ngFor="let ryuha of ryuhas" [value]="ryuha">
-                    {{ ryuha.name }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </form>
-</div>
+        <mat-card-content>
+            <mat-form-field class="form-field-style">
+                <mat-label>Name:</mat-label>
+                <input matInput formControlName="name" />
+            </mat-form-field>
+            <mat-form-field class="form-field-style">
+                <mat-label>Number:</mat-label>
+                <input matInput formControlName="number" />
+            </mat-form-field>
+            <mat-form-field class="form-field-style">
+                <mat-label>Ryuha:</mat-label>
+                <mat-select formControlName="ryuhaControl">
+                    <mat-option *ngFor="let ryuha of ryuhas" [value]="ryuha">
+                        {{ ryuha.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </mat-card-content>
 
-<div mat-dialog-actions>
+    </form>
+</mat-card>
+
+<div style="margin-top: 2em;">
     <button mat-button (click)="onSaveClicked()" color="green" cdkFocusInitial>
         Ok
     </button>

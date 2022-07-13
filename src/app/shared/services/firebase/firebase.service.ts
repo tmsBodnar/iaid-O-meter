@@ -75,7 +75,6 @@ export class FirebaseService {
             //  kataRef.off();
             const kata = kataSnap.val();
             kata.uid = key;
-            kata.notes = await this.getNotesForKata(key);
             result.push(kata);
           });
         }
@@ -122,10 +121,8 @@ export class FirebaseService {
         .ref(`ryuha-kata/${kata.ryuha.uid}/${key}`)
         .push();
       this.db.ref(`ryuha-kata/${kata.ryuha?.uid}/`).child(key).set(true);
-      this.saveNotes(notes, kata);
     } else {
       const kataRef = this.db.ref(`kata/${kata.uid}`);
-      this.saveNotes(notes, kata);
       await kataRef.update(kata);
     }
   }
@@ -140,6 +137,11 @@ export class FirebaseService {
       .child(iaidoka.uid)
       .child(kata.uid);
     await kataOfIaidokaRef.remove();
+    const ryuhaKataRef = this.db
+      .ref(`ryuha-kata/`)
+      .child(kata.ryuha.uid)
+      .child(kata.uid);
+    await ryuhaKataRef.remove();
   }
 
   async getAllKeikoForIaidoka(uid?: string): Promise<Keiko[]> {
