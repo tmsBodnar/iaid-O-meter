@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { Generalcomponent } from 'src/app/shared/generics/generalcomponent';
 import { Iaidoka } from 'src/app/shared/models/Iaidoka';
+import { Ryuha } from 'src/app/shared/models/Ryuha';
 import { FirebaseService } from 'src/app/shared/services/firebase/firebase.service';
 
 @Component({
@@ -21,6 +22,8 @@ export class UserinfoComponent implements OnInit, Generalcomponent {
   emailDisabled = true;
 
   clicked = false;
+  newRyuha: string = '';
+  ryuhas: Ryuha[] = [];
 
   userForm: FormGroup;
 
@@ -34,15 +37,26 @@ export class UserinfoComponent implements OnInit, Generalcomponent {
         this.iaidoka?.email,
         Validators.compose([Validators.required, Validators.email]),
       ],
+      ryuha: [this.newRyuha],
     });
   }
 
   async ngOnInit() {
     this.userForm.controls['name'].setValue(this.iaidoka?.name);
     this.userForm.controls['email'].setValue(this.iaidoka?.email);
+    this.ryuhas = await this.firebaseService.getRyuhasForUser(
+      this.iaidoka?.uid
+    );
   }
 
   async onFormSubmit() {
+    if (this.userForm.controls['ryuha'].value !== '') {
+      const ryuha: Ryuha = {
+        name: this.userForm.controls['ryuha'].value,
+        katas: [],
+      };
+      this.firebaseService.saveNewRyuha(ryuha, this.iaidoka!);
+    }
     const email =
       this.iaidoka!.email !== this.userForm.controls['email'].value
         ? this.userForm.controls['email'].value

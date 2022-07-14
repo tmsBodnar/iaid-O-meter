@@ -5,18 +5,20 @@ import { UserinfoComponent } from './userinfo.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [UserinfoComponent],
   imports: [
-    CommonModule, 
+    CommonModule,
     MatIconModule,
     MatInputModule,
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
-    MatGridListModule
-  ]
+    MatGridListModule,
+    MatListModule,
+  ],
 })
-export class UserinfoModule { }
+export class UserinfoModule {}

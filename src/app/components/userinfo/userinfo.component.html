@@ -2,16 +2,16 @@
     <form [formGroup]="userForm" (submit)="onFormSubmit()">
 
         <mat-form-field appearance=fill class="form-input">
-          <mat-label>
-              Name
+            <mat-label>
+                Name
             </mat-label>
-            <input matInput #name formControlName="name" >
+            <input matInput #name formControlName="name">
             <mat-icon matSuffix>edit</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="form-input">
             <mat-label>
-              Email
+                Email
             </mat-label>
             <input type="email" matInput #emailAddr formControlName="email">
             <mat-icon matSuffix>edit</mat-icon>
@@ -19,14 +19,31 @@
                 Please enter a valid email address
             </mat-error>
             <mat-error *ngIf="userForm.hasError('required')">
-               Email is <strong>required</strong>
+                Email is <strong>required</strong>
             </mat-error>
         </mat-form-field>
+        <mat-label>
+            Ryuha:
+        </mat-label>
+        <mat-list #katas>
+            <mat-list-item *ngFor="let ryuha of ryuhas" role="listitem" style="display: list-item;">
+                <span>
+                    {{ ryuha.name }}
+                </span>
+            </mat-list-item>
+        </mat-list>
+        <mat-form-field appearance=fill class="form-input">
+            <mat-label>
+                newRyuha
+            </mat-label>
+            <input matInput #ryuha formControlName="ryuha">
+            <mat-icon matSuffix>plus</mat-icon>
+        </mat-form-field>
 
-        <div class="loginbtn centered-text">  
+        <div class="loginbtn centered-text">
             <button mat-raised-button color="primary" [disabled]="userForm.invalid || clicked" type="submit">
                 Save
             </button>
         </div>
-    </form>       
+    </form>
 </div>

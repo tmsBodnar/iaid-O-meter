@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { forwardRef, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
 import { MatInputModule } from '@angular/material/input';
@@ -13,6 +13,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
+import { KataComponent } from '../kata/kata.component';
 
 @NgModule({
   declarations: [DashboardComponent],

@@ -1,30 +1,4 @@
-<mat-card>
-    <form #form [formGroup]="detailsForm">
-        <mat-card-content>
-            <mat-form-field class="form-field-style">
-                <mat-label>Name:</mat-label>
-                <input matInput formControlName="name" />
-            </mat-form-field>
-            <mat-form-field class="form-field-style">
-                <mat-label>Number:</mat-label>
-                <input matInput formControlName="number" />
-            </mat-form-field>
-            <mat-form-field class="form-field-style">
-                <mat-label>Ryuha:</mat-label>
-                <mat-select formControlName="ryuhaControl">
-                    <mat-option *ngFor="let ryuha of ryuhas" [value]="ryuha">
-                        {{ ryuha.name }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </mat-card-content>
-
-    </form>
-</mat-card>
-
-<div style="margin-top: 2em;">
-    <button mat-button (click)="onSaveClicked()" color="green" cdkFocusInitial>
-        Ok
-    </button>
-    <button mat-button (click)="onCancelClicked()">Cancel</button>
+<div style="height: 100%;">
+    <p>kata-details works!</p>
+    {{ kata?.name }}
 </div>

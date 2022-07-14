@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { InjectionToken, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { KataComponent } from './kata.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -12,10 +12,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
-import { KataDetailsComponent } from './kata-details/kata-details.component';
 
 @NgModule({
-  declarations: [KataComponent, NewKataDialogComponent, KataDetailsComponent],
+  declarations: [KataComponent, NewKataDialogComponent],
   imports: [
     CommonModule,
     FormsModule,

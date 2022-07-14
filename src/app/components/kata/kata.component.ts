@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, Inject, Injector, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Iaidoka } from 'src/app/shared/models/Iaidoka';
 import { Note } from 'src/app/shared/models/Note';
@@ -8,6 +8,8 @@ import { FirebaseService } from 'src/app/shared/services/firebase/firebase.servi
 import { NewKataDialogComponent } from './new-kata-dialog/new-kata-dialog.component';
 import { Ryuha } from 'src/app/shared/models/Ryuha';
 import { KataDetailsComponent } from './kata-details/kata-details.component';
+// import { DashboardService } from 'src/app/shared/services/dashboard/dashboard.service';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 @Component({
   selector: 'app-kata',
@@ -27,7 +29,8 @@ export class KataComponent implements OnInit {
   constructor(
     private firebaseService: FirebaseService,
     private authService: AuthService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private dashboard: DashboardComponent
   ) {}
 
   async ngOnInit() {
@@ -80,7 +83,10 @@ export class KataComponent implements OnInit {
       }
     });
   }
-  onKataNotesEdit(kata: Kata) {}
+  onKataNotesEdit(kata: Kata) {
+    const componentRef = this.dashboard.loadComponent(KataDetailsComponent);
+    componentRef.instance.kata = kata;
+  }
 
   setSelectedRyuha(index: number) {
     this.selectedRyuha = this.ryuhas[index];

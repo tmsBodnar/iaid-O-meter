@@ -192,4 +192,21 @@ export class FirebaseService {
       }
     });
   }
+  async saveNewRyuha(ryuha: Ryuha, iaidoka: Iaidoka) {
+    if (!ryuha.uid) {
+      const kataRef = this.db.ref(`ryuha/`);
+      const kataSnap = await kataRef.push(ryuha);
+      const key = kataSnap.getKey();
+      ryuha.uid = key;
+      const updateRef = this.db.ref(`ryuha/${key}`);
+      updateRef.update(ryuha);
+      const iaidokaryuhaRef = this.db
+        .ref(`iaidoka-ryuha/${iaidoka?.uid}/${key}`)
+        .push();
+      this.db.ref(`iaidoka-ryuha/${iaidoka?.uid}/`).child(key).set(true);
+    } else {
+      const ryuhaRef = this.db.ref(`ryuha/${ryuha.uid}`);
+      await ryuhaRef.update(ryuha);
+    }
+  }
 }

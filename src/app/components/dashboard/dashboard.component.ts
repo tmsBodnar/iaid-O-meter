@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   ComponentFactoryResolver,
+  forwardRef,
   Inject,
   OnInit,
   Type,
@@ -26,6 +27,7 @@ import { Generalcomponent } from 'src/app/shared/generics/generalcomponent';
 import { Iaidoka } from 'src/app/shared/models/Iaidoka';
 import { User } from 'src/app/shared/models/User';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { KataDetailsComponent } from '../kata/kata-details/kata-details.component';
 import { KataComponent } from '../kata/kata.component';
 import { OverallComponent } from '../overall/overall.component';
 import { UserinfoComponent } from '../userinfo/userinfo.component';
@@ -53,12 +55,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   selectedItem: any;
   selectedComponent: any;
+  isKataDetails = false;
 
   constructor(
     public authService: AuthService,
     public afdb: AngularFireDatabase,
     private router: Router,
-    private componentFactoryResolver: ComponentFactoryResolver,
+    public componentFactoryResolver: ComponentFactoryResolver,
     private ref: ChangeDetectorRef,
     public dialogRef: MatDialogRef<any>,
     public dialog: MatDialog,
@@ -108,6 +111,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       case 'Kata':
         this.selectedComponent = selectedItem;
         componentRef = this.loadComponent(KataComponent);
+        componentRef.instance.dashBoard = this;
         break;
       case 'User':
         this.selectedComponent = selectedItem;
@@ -117,6 +121,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   loadComponent(component: Type<Generalcomponent>): any {
+    console.log(component.name);
+    if (component.name === 'KataDetailsComponent') {
+      this.isKataDetails = true;
+    } else {
+      this.isKataDetails = false;
+    }
     this.componentContainerRef?.clear();
     const componentFactory =
       this.componentFactoryResolver.resolveComponentFactory(component);
@@ -140,5 +150,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         this.navigateBySelected(this.selectedComponent);
       }
     });
+  }
+  onBackClicked() {
+    this.loadComponent(KataComponent);
   }
 }

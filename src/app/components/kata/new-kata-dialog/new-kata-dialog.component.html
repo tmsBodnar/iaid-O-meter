@@ -28,5 +28,5 @@
     Ok
   </button>
   <button mat-button (click)="onCancelClicked()">Cancel</button>
-  <button mat-button (click)="onRemoveClicked()">Remove</button>
+  <button mat-button (click)="onRemoveClicked()" *ngIf="kata">Remove</button>
 </div>

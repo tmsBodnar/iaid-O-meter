@@ -1,16 +1,19 @@
 <!-- Top navigation -->
 <mat-toolbar color="primary">
   <button mat-icon-button (click)="drawer.toggle()">
-   <mat-icon>menu</mat-icon>
+    <mat-icon>menu</mat-icon>
   </button>
   <span>iaid-O-meter</span>
+  <button *ngIf="isKataDetails" mat-icon-button (click)="onBackClicked()" style="float: right;">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
   <span class="spacer"></span>
- 
+
 </mat-toolbar>
 <mat-drawer-container class="sidenav-container" hasBackdrop="true" (backDropClick)="drawer.toggle()" autosize>
-  <mat-drawer #drawer class="sidenav-drawer" mode="over" >
+  <mat-drawer #drawer class="sidenav-drawer" mode="over">
     <mat-selection-list #menuitems [multiple]="false" (selectionChange)="onMenuitemClicked($event)"
-     (click)="drawer.toggle()" >
+      (click)="drawer.toggle()">
       <mat-list-option *ngFor="let option of options" [value]="option">{{option}}</mat-list-option>
     </mat-selection-list>
   </mat-drawer>
@@ -21,6 +24,3 @@
     </ng-template>
   </div>
 </mat-drawer-container>
-
-
-
